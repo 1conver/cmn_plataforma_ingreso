@@ -1,0 +1,188 @@
+================================================================================
+INFORME INTEGRAL DE TRABAJO - PREPARACIÓN DE INGRESO CMN (v2)
+POSTULANTE: FRANCO | ESCALAFÓN: SISTEMA COMPUTACIÓN DE DATOS
+COLEGIO MILITAR DE LA NACIÓN - EJÉRCITO ARGENTINO
+================================================================================
+FECHA DE CONSOLIDACIÓN: 03 de Octubre de 2026 (revisión mayor v2.0)
+ESTADO DE PLATAFORMA: Operativa, verificada en navegador y con persistencia local
+DIRECTORIO DE TRABAJO: C:\Users\Aco\.gemini\antigravity\scratch\cmn_plataforma_ingreso
+================================================================================
+
+1. ANTECEDENTES Y REQUERIMIENTOS DEL POSTULANTE
+--------------------------------------------------------------------------------
+1.1. Perfil del Postulante:
+- Nombre: Franco.
+- Título de base: Técnico Universitario en Seguridad Informática.
+- Concurso: Ingreso al Cuerpo Profesional del Ejército Argentino como Oficial
+  (Subteniente en Comisión), Escalafón Sistema Computación de Datos.
+- Fortalezas consolidadas: ciberseguridad operativa, Cloud (Azure, GCP), redes
+  modernas y VPN (Wireguard), segmentación, iptables/pfSense.
+- Brechas críticas a nivelar (exigidas por el CMN):
+  * Prioridad 1: Normalización avanzada (4FN por MVD, 5FN/PJNF por Teorema de Fagin).
+  * Prioridad 1: Windows Server on-premise (AD, bosque/árbol, FSMO, replicación,
+    AGDLP, NTFS vs Share).
+  * Prioridad 2: Stack web clásico (ASP/VBScript con Application/Session, PHP
+    procedural mysql_connect vs mysql_pconnect), historia de lenguajes y
+    programación estructurada.
+
+1.2. Evolución de la plataforma:
+- v1: plataforma de 5 módulos; luego 7; luego rediseño sobrio Grafito/Carbono
+  (#0d0e11 / #14161a / #1a1c22), sin emojis, síntesis extrema de textos.
+- v2 (esta revisión, 03-OCT-2026): reconstrucción integral verificada en
+  navegador. Detalle completo en la sección 5.
+
+================================================================================
+2. PARÁMETROS DEL EXAMEN OFICIAL DEL CMN
+--------------------------------------------------------------------------------
+Fuente: "Programa Intelectual de Ingreso" (El Palomar, noviembre 2015) y
+"Modelo de Examen Escrito Oficial" (ambos PDF reales en esta carpeta).
+
+- Modalidad: 3 momentos secuenciales: escrito (eliminatorio), oral ante mesa
+  examinadora y evaluación práctica.
+- Examen escrito: 120 minutos continuos; escala 0.00 a 10.00; aprueba con 6.00.
+  * Parte I: 10 preguntas de selección múltiple (0.40 c/u = 4.00 pts).
+  * Parte II: 3 preguntas de completamiento directo (1.00 c/u = 3.00 pts).
+  * Parte III: 1 caso práctico de desarrollo operacional (3.00 pts).
+
+================================================================================
+3. TEMARIO OFICIAL (56 PUNTOS, REFLEJADOS 1 A 1 EN LA PESTAÑA "PROGRAMA")
+--------------------------------------------------------------------------------
+A. REDES (17 puntos): OSI y TCP/IP; Repeaters, Hub, Switch, Bridge, Router;
+   UTP, Coaxil, Fibra óptica, Inalámbricas; LAN características/tipos,
+   direccionamiento IP, subneteo, enrutamiento; WAN y Frame Relay, PPP, HDLC.
+B. WINDOWS (17 puntos): instalación; DC, árbol y bosque; sitios y replicación;
+   cuentas; grupos locales y globales; CONFIGURACIÓN DE IMPRESORAS; permisos
+   (compartidos, NTFS, impresoras); servicios DNS, WINS, DHCP, RRAS, VPN
+   (PPTP/L2TP, IPSec, RADIUS) y DFS.
+C. DESARROLLO (10 puntos): UML; compaginadores/traductores/compiladores/
+   intérpretes; HISTORIA DE LOS LENGUAJES; PROGRAMACIÓN ESTRUCTURADA; los 6
+   paradigmas; nacimiento de la web, HTML, JS y DHTML, PHP+MySQL, ASP/VBScript.
+D. BASES DE DATOS (12 puntos): etapas de diseño; E-R (representación, GRADO,
+   CARDINALIDAD, reducción); modelo relacional (tablas, dominios, claves,
+   vistas); normalización en 5 formas normales; T-SQL (selección, manipulación,
+   tablas, vistas, índices).
+NOTA v2: los temas en MAYÚSCULAS estaban ausentes o incompletos en la v1 y
+fueron incorporados a teoría, bancos de preguntas y compendios.
+
+================================================================================
+4. INVESTIGACIÓN DE BIBLIOGRAFÍA: VEREDICTO VERIFICADO (03-OCT-2026)
+--------------------------------------------------------------------------------
+El postulante sospechó correctamente: de los 6 PDFs, solo el Programa Oficial y
+el Modelo de Examen son documentos reales del CMN. Los 4 "Bibliografia_PilarX"
+eran compendios generados (no los libros originales).
+
+Investigación individual de los 14 títulos citados por el programa oficial
+(motores de búsqueda + catálogos): TODOS existen como obras comerciales reales,
+pero NINGUNO tiene PDF original legal y gratuito en la web. Son obras protegidas
+de Ra-Ma, New Riders, Reverté, Bubok, Visión Libros, IC Editorial y Babelcube.
+Hallazgos de acceso legítimo (cargados en la pestaña Bibliografía):
+- Uyless Black: el original en inglés "Computer Networks: Protocols, Standards
+  and Interfaces" (1987) está en Internet Archive con préstamo digital gratuito
+  (archive.org/details/computernetworks0000blac_c2d7).
+- CCNA 1er y 2do año: "CCNA 1 and 2 Companion Guide" (2003 y 2005) en Internet
+  Archive con préstamo gratuito; currícula actual en netacad.com (cuenta gratis).
+- Teleinformática Vol. 2 (Castro Lechtaler/Fusario): vista previa en Google
+  Books (books.google.com/books?id=W5qfR_axiGsC); venta en Reverté.
+- Curricula Microsoft y TechNet: sucesor oficial gratuito en Microsoft Learn
+  (learn.microsoft.com) — el MOC 2008 fue retirado (~2019).
+- Resto (Carballar, Rozell, Adamson, Eslava Muñoz x2, Nevado Cabello, Jiménez
+  Capel, Prescott): solo compra (editorial/tienda) o biblioteca (WorldCat);
+  la edición de Nevado Cabello se vende como PDF de pago en Casa del Libro.
+No se enlazan sitios con copias piratas (Z-Library, Scribd con uploads de
+terceros, etc.): la plataforma enlaza únicamente acceso verificado legítimo.
+
+================================================================================
+5. PLATAFORMA v2 - QUÉ CAMBIÓ (index.html reconstruido y verificado)
+--------------------------------------------------------------------------------
+5.1. Estructura (10 pestañas):
+  Resumen | Programa | Bibliografía & PDFs | Teoría | Simulacro | Normalización
+  BD | Subneteo IPv4 | SQL / T-SQL | Flashcards | Mesa Oral.
+
+5.2. Nuevas funcionalidades:
+- Pestaña "Programa": checklist interactivo con los 56 puntos exactos del
+  programa oficial, fuente bibliográfica por punto, progreso por pilar y
+  persistencia automática (localStorage).
+- Persistencia total: simulacros rendidos, mejor nota, historial de los últimos
+  8 intentos con fecha, temario marcado y fichas dominadas sobreviven el cierre.
+- Subneteo DINÁMICO: antes eran 6 casos fijos; ahora cada ejercicio se genera al
+  azar (3 dificultades) y la solución se calcula programáticamente (máscara,
+  red, broadcast, primer/último host, hosts útiles), con "desarrollo" del método
+  del octeto crítico y racha de aciertos persistente.
+- Bancos ampliados y corregidos: 52 MCQ (antes 16; además ahora se MEZCLAN LAS
+  OPCIONES en cada intento, eliminando el patrón adivinable de la v1), 12 de
+  completamiento (antes 3), 12 casos orales (antes 4), 44 flashcards (antes 12)
+  y 6 preguntas rápidas SQL.
+- Modo "Repetir falladas": reconstruye un simulacro con los ítems fallados del
+  último intento.
+- Visor de PDF integrado (modal con iframe + fallback "abrir en pestaña").
+- Atajos de teclado: flechas navegar fichas, Espacio girar, S marcar OK,
+  R repasar, 1-4 responder la primera MCQ sin responder, Esc cierra el visor.
+- Flashcards con marcado "La sé / Repasar" persistente y filtro por estado.
+- Restauración de la última pestaña visitada; cronómetro rojo bajo 10 min.
+
+5.3. Sección Bibliografía reconstruida (honestidad documental):
+- Aclaración destacada: qué PDFs son oficiales (2) y qué compendios son
+  síntesis propia (4), con fecha de verificación.
+- Tabla de los 14 títulos con editor/año/ISBN verificados, estado
+  (GRATUITO OFICIAL / PRÉSTAMO DIGITAL / SIN PDF LEGAL) y enlaces legítimos.
+- Nueva sección de fuentes oficiales gratuitas (Microsoft Learn, NetAcad,
+  RFC 1918/1661, IEEE 802.11).
+
+5.4. Contenido teórico: cubre ahora el 100% del programa oficial, incluyendo
+  los temas faltantes en v1: instalación de AD, protocolos de replicación de
+  sitios, configuración de impresoras (compartir, drivers, permisos de
+  impresión, pool, prioridades), nodos NetBIOS de WINS, historia de los
+  lenguajes (FORTRAN 1957 a C# 2000), programación estructurada
+  (Böhm-Jacopini, Dijkstra), nacimiento de la web (CERN, Mosaic), grado y
+  cardinalidad E-R, atributos derivados, vistas, integridades y ACID.
+
+5.5. Diseño: paleta Grafito/Carbono mantenida y refinada (tipografía 13.5px,
+  animación sutil de cambio de vista, :focus-visible para teclado, hover en
+  tablas, chips de estado, kbd para atajos, responsive a 390px verificado,
+  hoja de estilos de impresión para estudiar en papel).
+
+5.6. Compendios PDF regenerados (tools/generate_compendios.py, Python +
+  reportlab): de 1 página a 3-4 páginas cada uno, con encabezado institucional,
+  DESCARGO explícito de que son síntesis propia (no los libros originales),
+  tablas comparativas y casos; regenerables con un comando. Bibliografía
+  real citada al pie de cada compendio.
+
+5.7. Verificación realizada en navegador (HTTP local):
+- Carga sin errores; 10 pestañas; simulacro completo rendido y calificado
+  (nota, desglose, rúbrica, historial y "Repetir falladas" correctos).
+- Subneteo resuelto y validado 6/6 con desarrollo mostrado.
+- Checklist del temario persiste tras recargar la página.
+- Visor PDF muestra el Programa Oficial (4 páginas) correctamente.
+- Vista móvil (390px) y laboratorio de normalización (4 pasos) verificados.
+
+================================================================================
+6. INVENTARIO DE ARCHIVOS
+--------------------------------------------------------------------------------
+1) index.html                - Plataforma v2 (SPA autónoma, 10 módulos).
+2) Programa_Oficial_CMN.pdf  - PDF OFICIAL (4 págs., El Palomar, nov. 2015).
+3) Modelo_Examen_Oficial_CMN.pdf - PDF OFICIAL del formato de examen escrito.
+4) Bibliografia_PilarA_Redes_CCNA.pdf   - Compendio A (síntesis propia, 4 págs.).
+5) Bibliografia_PilarB_WindowsServer_AD.pdf - Compendio B (síntesis propia).
+6) Bibliografia_PilarC_Software_PHP_ASP.pdf - Compendio C (síntesis propia).
+7) Bibliografia_PilarD_BasesDeDatos_SQL.pdf - Compendio D (síntesis propia).
+8) tools/generate_compendios.py - Generador reproducible de los compendios.
+9) REPORTE_COMPLETO_CMN.txt  - Este informe (v2).
+
+PARA ABRIR: doble clic en index.html (funciona offline desde file://; los PDFs
+se abren en el visor integrado o en pestaña). Para probar con servidor local:
+python -m http.server 8973 en la carpeta y abrir http://127.0.0.1:8973.
+
+================================================================================
+7. TRAZABILIDAD BIBLIOGRÁFICA EN LAS PRÁCTICAS
+--------------------------------------------------------------------------------
+- Simulacro: cada ítem cita su fuente ([Uyless Black · Cap. 2], [Microsoft
+  TechNet · FSMO], [Nevado Cabello · Cap. 4], etc.) y la explicación.
+- Flashcards: autor/manual en cada ficha.
+- Subneteo: referencia al método del octeto crítico (CCNA) y desarrollo paso a paso.
+- Mesa Oral: respuestas en lenguaje institucional con RFC, teoremas (Fagin) y
+  especificaciones de Microsoft.
+- Programa: fuente bibliográfica declarada por cada uno de los 56 puntos.
+
+================================================================================
+FIN DEL INFORME TÉCNICO CONSOLIDADO v2
+================================================================================

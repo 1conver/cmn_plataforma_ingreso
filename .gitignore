@@ -1,0 +1,4 @@
+.vercel
+*.bak
+*.tmp
+__pycache__
