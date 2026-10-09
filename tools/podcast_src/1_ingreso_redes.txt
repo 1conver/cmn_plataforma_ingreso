@@ -1,0 +1,209 @@
+=== id: i0
+titulo: Brief de misión: cómo es el ingreso y cómo estudiar
+pilar: I
+puntos: —
+resumen: Qué rendís, cuándo, cuánto dura cada examen y cómo usar esta plataforma para llegar con todo.
+L: Hola, hola. Esto es Frecuencia CMN, el podcast para preparar el ingreso al Colegio Militar como Oficial del Cuerpo Profesional, especialidad Sistema de Computación de Datos. Yo soy Lu.
+T: Y yo soy Tomi. En este primer episodio no vamos a dar teoría: vamos a hacer el brief de misión. Qué se rinde, cuándo, y cómo vamos a estudiar para llegar afilados.
+L: Arranquemos por las fechas, que es lo que más apura. Según la página oficial del Colegio, la inscripción para el ingreso 2027 cierra el 2 de noviembre de 2026, y los exámenes son del 16 al 20 de noviembre, en forma presencial en El Palomar.
+T: O sea que no hay tiempo para estudiar todo cinco veces. Hay que estudiar inteligente: priorizar, repasar espaciado y practicar en formato examen.
+L: Ahora, qué se rinde. La Guía de Ingreso vigente dice que los Analistas de Sistemas tienen tres exámenes intelectuales: un escrito de redes de 90 minutos, un escrito de programación de 90 minutos, y un examen práctico de redes y programación, también de 90 minutos.
+T: Y ojo con un detalle: el Programa oficial, que es de 2015, y el Modelo de Examen hablan de tres momentos, uno escrito, uno oral y uno práctico, y de un escrito de 120 minutos. Como hay diferencia entre documentos, nosotros preparamos todo: escritos de 90, un integral de 120 y práctica oral.
+L: ¿Y qué tipo de preguntas? El Modelo de Examen es clarísimo: preguntas de opción múltiple, preguntas de completamiento y preguntas de desarrollo. Las tres. Así que no alcanza con reconocer la respuesta correcta: también tenés que poder escribirla y explicarla.
+T: Y acá viene algo importante. El Modelo agrega temas que no están en el Programa: diagramas de flujo, pseudocódigo, resolución de problemas graficada con diagramas de flujo, programación orientada a objetos, ejemplos de lenguajes y nuevas tendencias en programación web.
+L: Exacto. Esos temas tienen sus propios episodios y un laboratorio en la plataforma donde escribís pseudocódigo, lo ejecutás y ves el diagrama de flujo generado solo.
+T: Además de lo intelectual, hay examen de aptitud física: trote de 2000 metros, flexo-extensión de brazos y flexiones de tronco, las dos en un minuto y medio. Cada prueba da hasta 100 puntos según la tabla oficial y la nota es el promedio de las tres.
+L: También hay circuito médico, examen psicotécnico y entrevista personal. Y un dato que mucha gente olvida: los estudios médicos los hacés por tu cuenta y el laboratorio vale solo 60 días. Si lo hacés demasiado temprano, se vence.
+T: Y algo que conviene tener presente: el ingreso es por orden de mérito. No alcanza con aprobar, hay que quedar entre las vacantes. Cada punto suma.
+L: Bueno, ¿cómo estudiamos? Te propongo un método de cuatro pasos. Uno: escuchá el episodio del tema, que es la pasada liviana. Dos: leé la teoría resumida y marcá el punto en el Programa solo cuando lo puedas explicar sin apuntes.
+T: Tres: practicá. Simulacros, subneteo, SQL, pseudocódigo, el Arcade. Y cuatro: repaso espaciado con las fichas y la Memoria Rápida, que te traen cada dato justo cuando estás por olvidarlo.
+L: La ciencia de la memoria es bastante clara en esto: recuperar activamente, o sea intentar responder antes de mirar, fija mucho más que releer. Y mezclar temas en una misma sesión cuesta más, pero se retiene mejor.
+T: Vos venís de seguridad informática, así que muchos temas los vas a ver desde otro ángulo. Usalo a favor: cuando veas un protocolo, preguntate cómo lo atacarías y cómo lo endurecerías. Eso te da ejemplos de oro para los desarrollos y para la mesa oral.
+L: Un tip para el día del escrito: leé todo el examen primero, contestá lo que sabés seguro, y repartí el tiempo. En los desarrollos usá estructura: definí, explicá, poné un ejemplo y cerrá con una conclusión.
+T: Y para lo físico, no lo dejes para la última semana. Entrenar de golpe es la receta para lesionarse justo antes del examen.
+L: Listo el brief. En la pantalla tenés tres preguntas para chequear que quedó claro. Nos escuchamos en el próximo episodio, donde arrancamos con el modelo OSI.
+T: Cambio y fuera.
+Q: Según la Guía de Ingreso vigente, ¿cuánto dura cada escrito para Analistas de Sistemas? | 90 minutos (redes y programación por separado) | 45 minutos | 180 minutos en un solo examen | La Guía lista escrito de redes de 90 minutos, escrito de programación de 90 y práctico de 90.
+Q: ¿Qué tipos de preguntas menciona el Modelo de Examen oficial? | Opción múltiple, completamiento y desarrollo | Solo opción múltiple | Solo verdadero o falso | El Modelo indica explícitamente las tres modalidades.
+Q: ¿Cuánto tiempo de validez tiene el laboratorio dentro de los estudios médicos? | 60 días | 1 año | 6 meses | El resto de los estudios vale un año; el laboratorio, solo 60 días.
+
+=== id: a1
+titulo: OSI y TCP/IP: el edificio de siete pisos
+pilar: A
+puntos: A1, A2
+resumen: Las 7 capas OSI, las 4 de TCP/IP, PDU por capa, encapsulamiento y topologías.
+L: Bienvenidos a Frecuencia CMN. Hoy, el tema que abre el programa de Redes: el modelo de referencia OSI y la suite de protocolos TCP/IP.
+T: Que en el programa aparecen bajo el título Topologías, así que de paso vamos a repasar las topologías físicas también.
+L: Arranquemos por el porqué. OSI significa Open Systems Interconnection. Lo publicó la ISO en 1984 como modelo de referencia: una forma de dividir la comunicación en capas, donde cada capa hace un trabajo y le da servicio a la de arriba.
+T: La imagen que más sirve es un edificio de siete pisos. En la planta baja están los cables y las señales, y en la terraza está la aplicación que usa el usuario.
+L: Vamos piso por piso, de abajo hacia arriba. Capa 1, Física: bits, voltajes, luz, conectores. Ahí viven el hub y el repetidor.
+T: Capa 2, Enlace de datos: arma tramas, usa direcciones MAC y detecta errores con el FCS, que es un CRC. Ahí trabajan el switch y el bridge.
+L: Capa 3, Red: direccionamiento lógico con IP y elección de rutas. El dispositivo estrella es el router.
+T: Capa 4, Transporte: segmentos, puertos, y la diferencia clave entre TCP, que es orientado a conexión y confiable, y UDP, que es sin conexión y más liviano.
+L: Capa 5, Sesión: abre, mantiene y cierra el diálogo entre aplicaciones. Capa 6, Presentación: formato de los datos, cifrado y compresión. Y capa 7, Aplicación: HTTP, DNS, SMTP, FTP, lo que el usuario toca.
+T: El truco para recordar el orden de abajo hacia arriba: F, E, R, T, S, P, A. Física, Enlace, Red, Transporte, Sesión, Presentación, Aplicación. Fui Entrando Rápido Tras Su Primera Aula.
+L: Ahora, la PDU, la unidad de datos de cada capa, que es pregunta fija de examen. Capa 1: bit. Capa 2: trama. Capa 3: paquete. Capa 4: segmento. Y de la 5 a la 7: datos.
+T: Bebé Toma Papilla Sin Dormir: bit, trama, paquete, segmento, datos.
+L: Cuando mandás información, cada capa le agrega su encabezado a lo que recibe de arriba. Eso es encapsulamiento. El receptor hace el camino inverso y le saca los encabezados: desencapsulamiento.
+T: Y la capa 2, además del encabezado, le agrega un tráiler al final: el FCS, para detectar errores. Si el FCS no coincide, la trama se descarta.
+L: Pasemos a TCP/IP. Es el modelo que realmente se usa en Internet. Nació de ARPANET, y en 1983 ARPANET adoptó TCP/IP como estándar. Tiene cuatro capas: Acceso a la red, Internet, Transporte y Aplicación.
+T: La equivalencia es simple. Acceso a la red junta Física y Enlace. Internet es la capa de Red, con IP, ICMP y ARP. Transporte es igual, con TCP y UDP. Y Aplicación de TCP/IP junta Sesión, Presentación y Aplicación de OSI.
+L: Ojo, algunos libros muestran TCP/IP con cinco capas, separando física y enlace. Si te preguntan, aclarás las dos versiones y quedás bien.
+T: Un clásico de TCP: el saludo de tres vías. El cliente manda SYN, el servidor contesta SYN-ACK, y el cliente cierra con ACK. Recién ahí hay conexión.
+L: Y vos que venís de seguridad, sabés que un SYN flood abusa justamente de ese saludo dejando conexiones a medio abrir. Ese tipo de ejemplo en un desarrollo suma un montón.
+T: Ahora sí, topologías. Topología física es cómo están conectados los cables; topología lógica es cómo circulan los datos. Las clásicas son: bus, todos colgados de un cable con terminadores; estrella, todos a un dispositivo central; anillo, cada equipo pasa al siguiente.
+L: Y además malla, donde hay múltiples caminos entre nodos y por eso es muy tolerante a fallos, árbol, que es una jerarquía de estrellas, y mixta o híbrida.
+T: La estrella es la topología física típica de una LAN Ethernet moderna. Si se cae un cable, cae un equipo, no toda la red. Pero si se cae el switch central, cae todo.
+L: Resumen rápido. OSI tiene siete capas y es de referencia; TCP/IP tiene cuatro y es el que se usa. PDU: bit, trama, paquete, segmento, datos. Cada capa encapsula. Y las topologías: bus, estrella, anillo, malla, árbol e híbrida.
+T: En pantalla te esperan tres preguntas. Y en el Arcade tenés el juego de ordenar las capas: tratá de hacerlo en menos de diez segundos.
+L: Nos escuchamos en el próximo episodio. Chau.
+Q: ¿Cuál es la PDU de la capa de Transporte? | Segmento | Trama | Paquete | Capa 4 trabaja con segmentos; capa 2 con tramas y capa 3 con paquetes.
+Q: ¿Qué capas de OSI agrupa la capa de Aplicación de TCP/IP? | Sesión, Presentación y Aplicación | Solo Aplicación | Transporte y Aplicación | La capa de Aplicación de TCP/IP equivale a las capas 5, 6 y 7 de OSI.
+Q: ¿Qué topología conecta todos los equipos a un dispositivo central? | Estrella | Bus | Anillo | En estrella, el punto único de falla es el dispositivo central.
+
+=== id: a2
+titulo: Dispositivos: repetidor, hub, bridge, switch y router
+pilar: A
+puntos: A3, A4, A5, A6, A7
+resumen: Qué hace cada dispositivo, en qué capa trabaja y qué dominios segmenta.
+L: Hoy en Frecuencia CMN tenemos los cinco dispositivos que el programa nombra uno por uno: repeaters, hub, switch, bridge y router.
+T: Y la pregunta que más se toma: quién segmenta dominios de colisión y quién segmenta dominios de broadcast. Hoy la dejamos clarísima.
+L: Primero, dos definiciones. Dominio de colisión: el conjunto de equipos que, si transmiten al mismo tiempo, sus señales chocan. Dominio de broadcast: el conjunto de equipos que reciben un mensaje de difusión enviado por cualquiera de ellos.
+T: Ahora sí. El repetidor, o repeater. Trabaja en capa 1. Recibe la señal, que se va degradando con la distancia, la regenera y la reenvía. No entiende direcciones, solo bits.
+L: El hub es un repetidor con muchos puertos. Lo que entra por un puerto sale por todos los demás. Todos los equipos conectados comparten un único dominio de colisión y trabajan en half-duplex.
+T: La imagen: el hub es un megáfono. Grita todo a todos. Y si dos gritan juntos, colisión.
+L: Subimos a capa 2. El bridge, o puente, une dos segmentos de red y filtra tramas mirando la dirección MAC de destino. Aprende qué MAC está de cada lado y solo deja pasar lo que tiene que pasar. Así separa dominios de colisión.
+T: Y el switch es, básicamente, un bridge multipuerto, hecho en hardware, con circuitos ASIC, mucho más rápido. Cada puerto del switch es su propio dominio de colisión. A eso se le llama microsegmentación. Y permite full-duplex.
+L: ¿Cómo sabe el switch a dónde mandar? Con la tabla MAC, también llamada tabla CAM. Cuando llega una trama, el switch anota la MAC de origen y el puerto. Si conoce la MAC de destino, la manda solo por ese puerto. Si no la conoce, inunda: la manda por todos los puertos menos por el que entró.
+T: Acá está la trampa. El switch separa dominios de colisión, pero por defecto todos sus puertos están en el mismo dominio de broadcast. Un broadcast que entra a un switch sale por todos los puertos.
+L: Salvo que configures VLANs. Cada VLAN es un dominio de broadcast distinto. Pero para que dos VLANs se hablen, necesitás un router o un switch de capa 3.
+T: Y llegamos al router, capa 3. El router conecta redes diferentes, decide por dónde mandar cada paquete mirando la dirección IP de destino y su tabla de enrutamiento. Y cada interfaz del router es un dominio de broadcast separado. El router no reenvía broadcasts.
+L: El router es como el GPS entre ciudades: mira la dirección IP y elige el mejor camino. El switch es el cartero del barrio: conoce cada casa por su MAC.
+T: Dos detalles más que suman puntos. El switch puede reenviar de dos formas: store-and-forward, que recibe la trama completa y verifica el FCS antes de reenviar, y cut-through, que empieza a reenviar apenas lee la MAC de destino. El primero descarta tramas con errores; el segundo es más rápido.
+L: Y en seguridad, vos sabés que un hub es un regalo para el atacante: cualquiera conectado ve todo el tráfico. Con switches, el atacante tiene que recurrir a cosas como ARP spoofing o saturar la tabla CAM.
+T: Ejercicio mental típico de examen. Tenés cuatro PCs en un hub, conectado a un switch con otras cuatro PCs, y el switch va a un router. ¿Cuántos dominios de colisión y de broadcast hay del lado LAN?
+L: El hub con sus cuatro PCs es un solo dominio de colisión, que llega hasta el puerto del switch. Cada una de las otras cuatro PCs en el switch es otro dominio. Y el enlace switch-router es otro. Total: seis dominios de colisión, y un solo dominio de broadcast, porque solo el router corta broadcast.
+T: Resumen en una línea: repetidor y hub no separan nada; bridge y switch separan colisión; router separa colisión y broadcast.
+L: Tres preguntas en pantalla y nos vemos en el próximo, con los cables.
+Q: ¿Qué dispositivo segmenta dominios de broadcast por defecto? | Router | Switch | Hub | Cada interfaz del router es un dominio de broadcast; el switch sin VLANs no los separa.
+Q: ¿Qué hace un switch cuando no conoce la MAC de destino? | Inunda la trama por todos los puertos menos el de entrada | La descarta | La devuelve al origen | Si la MAC no está en la tabla CAM, el switch inunda.
+Q: ¿En qué capa OSI trabaja el bridge? | Capa 2, Enlace | Capa 1, Física | Capa 3, Red | El bridge filtra por dirección MAC, que es de capa 2.
+
+=== id: a3
+titulo: Medios: UTP, coaxil, fibra óptica e inalámbricas
+pilar: A
+puntos: A8, A9, A10, A11
+resumen: Categorías de UTP, normas T568A/B, coaxil histórico, fibra mono y multimodo, y Wi-Fi 802.11.
+L: Hoy bajamos a la planta baja del edificio OSI: los medios de transmisión. Cableado UTP, coaxil, fibra óptica y redes inalámbricas.
+T: Empecemos por el que vas a ver en todos lados: el UTP, par trenzado sin blindaje. Son ocho hilos agrupados en cuatro pares trenzados. El trenzado no es decorativo: reduce la interferencia y la diafonía entre pares.
+L: La distancia máxima de un tendido de UTP es de 100 metros. Ese número se toma muchísimo. Y el conector es el RJ-45.
+T: Las categorías. Categoría 5: hasta 100 megabits. Categoría 5e: Gigabit Ethernet, mil megabits. Categoría 6: también Gigabit con más margen, y 10 gigabits pero en tramos cortos. Categoría 6A: 10 gigabits hasta los 100 metros.
+L: Para armar los cables existen dos normas de colores: T568A y T568B. Si los dos extremos usan la misma norma, tenés un cable directo, que conecta equipos distintos, por ejemplo PC con switch. Si un extremo es A y el otro es B, tenés un cable cruzado, que se usaba entre equipos iguales, como PC con PC o switch con switch.
+T: Hoy la mayoría de los equipos tiene Auto-MDIX, que detecta y corrige solo. Pero en el examen, la regla clásica: iguales, cruzado; distintos, directo.
+L: También existe el STP, par trenzado blindado, con una malla metálica que lo protege mejor del ruido electromagnético. Es más caro y más rígido.
+T: Pasemos al coaxil. Tiene un conductor central de cobre, un aislante, una malla y la cubierta. Las primeras redes Ethernet eran coaxiles en topología bus.
+L: Dos nombres para recordar. 10BASE5, el coaxil grueso o thicknet, con segmentos de hasta 500 metros. Y 10BASE2, el coaxil fino o thinnet, con segmentos de 185 metros y conectores BNC.
+T: Y como era un bus, cada extremo necesitaba un terminador de 50 ohms. Si faltaba el terminador, la señal rebotaba y se caía toda la red. Hoy el coaxil quedó para televisión por cable y algunos enlaces de radio.
+L: Fibra óptica. Acá no viaja electricidad, viaja luz. Eso le da tres ventajas enormes: inmunidad total a la interferencia electromagnética, mucha más distancia y mucho más ancho de banda.
+T: Y una ventaja de seguridad que te va a gustar: es muy difícil de pinchar sin que se note, y no irradia señal. Por eso se usa en instalaciones militares.
+L: Hay dos tipos. Monomodo: núcleo muy fino, de unos 9 micrones, usa láser, un solo modo de luz, y llega a decenas de kilómetros. Se usa en enlaces WAN y troncales largas.
+T: Multimodo: núcleo más grueso, de 50 o 62,5 micrones, usa LED o láser VCSEL, la luz viaja por varios caminos, hay más dispersión, y alcanza cientos de metros a un par de kilómetros. Se usa dentro de edificios y campus.
+L: El truco: mono es una autopista de un solo carril, recta y larga. Multi es una avenida ancha con mucho tráfico, buena para distancias cortas. Conectores típicos: SC, LC y ST.
+T: Y cerramos con inalámbricas: la familia IEEE 802.11, Wi-Fi. Vamos con los estándares. 802.11b: 2,4 gigahercios y 11 megabits. 802.11a: 5 gigahercios y 54 megabits. 802.11g: 2,4 gigahercios y 54 megabits.
+L: 802.11n, o Wi-Fi 4: introduce MIMO, varias antenas, y trabaja en 2,4 y 5. 802.11ac, Wi-Fi 5: en 5 gigahercios, mucho más rápido. Y 802.11ax, Wi-Fi 6, que agrega eficiencia en lugares con muchos equipos.
+T: Diferencia de acceso al medio que se toma: Ethernet cableada usaba CSMA/CD, detección de colisiones. Wi-Fi usa CSMA/CA, evitación de colisiones, porque una antena no puede escuchar mientras transmite.
+L: Modos de trabajo: infraestructura, con un punto de acceso central, y ad hoc, equipo a equipo. Y seguridad: WEP está roto, WPA fue un parche, WPA2 con AES es el mínimo aceptable, y WPA3 agrega SAE contra ataques de diccionario.
+T: Resumen de supervivencia: UTP 100 metros, Cat 5e Gigabit; coaxil 10BASE5 500 metros y 10BASE2 185; fibra monomodo larga distancia con láser, multimodo corta; Wi-Fi 802.11 con CSMA/CA.
+L: Tres preguntas en pantalla. Y en el próximo episodio, el que todos temen y no hay que temer: subneteo.
+Q: ¿Cuál es la distancia máxima de un segmento UTP Ethernet? | 100 metros | 185 metros | 500 metros | 185 m es 10BASE2 y 500 m es 10BASE5, ambos coaxiles.
+Q: ¿Qué fibra usa láser y núcleo de unos 9 micrones para largas distancias? | Monomodo | Multimodo | Coaxil RG-58 | La monomodo tiene menos dispersión y llega a decenas de kilómetros.
+Q: ¿Qué método de acceso al medio usa Wi-Fi? | CSMA/CA | CSMA/CD | Token passing | Wi-Fi evita colisiones porque no puede detectarlas mientras transmite.
+
+=== id: a4
+titulo: Direccionamiento IP y subneteo sin miedo
+pilar: A
+puntos: A12, A13, A14
+resumen: LAN, clases IPv4, rangos privados, máscara, CIDR y el método del octeto crítico paso a paso.
+L: Hoy en Frecuencia CMN: direccionamiento IP y subneteo. Y te prometo algo: al final del episodio vas a poder calcular una subred de cabeza.
+T: Pero antes, un minuto de redes LAN, que el programa pide características y tipos. Una LAN es una red de área local: un edificio, un campus, una unidad. Alta velocidad, baja latencia, administrada por la propia organización.
+L: El estándar dominante es Ethernet, IEEE 802.3. Históricamente hubo Token Ring, 802.5, y FDDI con fibra en doble anillo. Y por tamaño se habla de PAN, LAN, MAN y WAN, de menor a mayor alcance.
+T: Ahora sí, IPv4. Una dirección IPv4 tiene 32 bits, escritos como cuatro octetos en decimal separados por puntos. Cada octeto va de 0 a 255.
+L: Toda dirección tiene una parte de red y una parte de host. ¿Quién marca dónde termina una y empieza la otra? La máscara de subred. Los bits en uno de la máscara son red; los bits en cero son host.
+T: Las clases históricas. Clase A: primer octeto de 1 a 126, máscara por defecto barra 8. Clase B: de 128 a 191, barra 16. Clase C: de 192 a 223, barra 24. Clase D, de 224 a 239, es multicast. Y clase E, experimental.
+L: El 127 queda afuera porque es loopback. Y los rangos privados del RFC 1918, que no se enrutan en Internet: 10 punto 0 barra 8, 172 punto 16 barra 12, que va de 172.16 a 172.31, y 192 punto 168 barra 16.
+T: Y si una PC con DHCP no consigue dirección, se autoasigna una del rango 169.254: eso es APIPA. Si ves un 169.254 en un equipo, sabés que el DHCP falló.
+L: La notación CIDR, o barra, indica cuántos bits de red hay. Barra 24 es 255.255.255.0. Barra 26 son 26 bits en uno: 255.255.255.192.
+T: Para pasar de barra a máscara, memorizá esta secuencia, que es la suma acumulada de los bits: 128, 192, 224, 240, 248, 252, 254, 255. Un bit es 128, dos bits 192, tres bits 224, y así.
+L: Ahora el método del octeto crítico, que es la forma más rápida. Ejemplo: 172.16.89.45 barra 22. Paso uno: ¿en qué octeto cae el corte? Barra 22 son 16 bits de los dos primeros octetos más 6 bits del tercero. El octeto crítico es el tercero.
+T: Paso dos: el valor de la máscara en ese octeto. Seis bits encendidos: 252. La máscara es 255.255.252.0.
+L: Paso tres: el salto, o tamaño de bloque: 256 menos 252, igual a 4. Las redes en el tercer octeto van de 4 en 4: 0, 4, 8, y así hasta 252.
+T: Paso cuatro: ¿en qué bloque cae el 89? El múltiplo de 4 inmediatamente inferior o igual a 89 es 88. Entonces la dirección de red es 172.16.88.0.
+L: Paso cinco: el broadcast es la siguiente red menos uno. La siguiente red es 172.16.92.0, así que el broadcast es 172.16.91.255.
+T: Paso seis: primer host, red más uno: 172.16.88.1. Último host, broadcast menos uno: 172.16.91.254.
+L: Y paso siete, la cantidad de hosts útiles: dos elevado a los bits de host, menos dos. Con barra 22 quedan 10 bits de host: dos a la diez es 1024, menos dos, 1022 hosts.
+T: Se restan dos porque la primera dirección es la red y la última es el broadcast. Ojo con el caso especial: una barra 30 tiene dos hosts útiles, perfecta para un enlace punto a punto entre routers.
+L: Y si te piden cantidad de subredes: dos elevado a los bits que pediste prestados. Si de una barra 24 pasás a barra 27, pediste tres bits: ocho subredes de 30 hosts cada una.
+T: Último concepto: VLSM, máscaras de longitud variable. En vez de cortar todas las subredes del mismo tamaño, le das a cada una lo que necesita. La regla de oro: asignar de la más grande a la más chica, para no fragmentar el espacio.
+L: Resumen: máscara separa red y host; secuencia 128, 192, 224, 240, 248, 252, 254, 255; salto igual a 256 menos la máscara en el octeto crítico; red es el múltiplo inferior; broadcast es la siguiente red menos uno; hosts útiles dos a la n menos dos.
+T: En la plataforma tenés el entrenador de subneteo con ejercicios infinitos y un modo VLSM. Hacé tres por día y en dos semanas lo hacés dormido.
+L: Tres preguntas en pantalla. Nos escuchamos en el próximo: enrutamiento.
+Q: ¿Cuántos hosts útiles tiene una subred barra 26? | 62 | 64 | 30 | Quedan 6 bits de host: 2 a la 6 es 64, menos 2, 62.
+Q: Con máscara 255.255.255.224, ¿cuál es el salto de bloque? | 32 | 16 | 24 | 256 menos 224 es 32.
+Q: ¿Qué indica una dirección 169.254.x.x en una PC? | Que no obtuvo dirección por DHCP (APIPA) | Que es una IP pública | Que es loopback | APIPA se autoasigna cuando falla el DHCP.
+
+=== id: a5
+titulo: Enrutamiento: estático, RIP, OSPF y distancias administrativas
+pilar: A
+puntos: A15
+resumen: Cómo decide un router, rutas estáticas y dinámicas, vector distancia vs estado de enlace, y la tabla de distancias administrativas.
+L: Hoy en Frecuencia CMN: enrutamiento y protocolos de enrutamiento. El GPS de las redes.
+T: Arranquemos por lo básico. Un router tiene una tabla de enrutamiento: una lista de redes destino y por dónde llegar a cada una. Cuando recibe un paquete, mira la IP de destino, busca la coincidencia más específica, la de prefijo más largo, y lo manda por esa interfaz.
+L: ¿Cómo entran las rutas a la tabla? Tres formas. Uno: redes directamente conectadas, que aparecen solas cuando configurás una interfaz. Dos: rutas estáticas, que escribe el administrador a mano. Tres: rutas dinámicas, que aprende el router hablando con otros routers mediante un protocolo.
+T: Las estáticas son simples, seguras y no consumen recursos, pero no se adaptan solas: si un enlace se cae, alguien tiene que cambiarlas. Son ideales para redes chicas o para una ruta por defecto hacia el proveedor.
+L: Las dinámicas se adaptan solas a los cambios, pero consumen ancho de banda, procesador y hay que asegurarlas. Y se dividen en familias.
+T: Primera familia: vector distancia. El router conoce la distancia a cada red y la dirección, el vector, pero no conoce el mapa completo. Le cree a lo que le cuentan los vecinos. Es como preguntar en cada esquina.
+L: El ejemplo clásico es RIP. Su métrica es el número de saltos, o sea cuántos routers hay que atravesar. El máximo es 15 saltos; 16 significa inalcanzable. Manda actualizaciones de toda su tabla cada 30 segundos.
+T: RIP versión 1 es con clase y usa broadcast. RIP versión 2 soporta máscaras variables y usa multicast. El problema de vector distancia es que converge lento y puede generar bucles. Para eso existen técnicas como split horizon, que dice: no anuncies una ruta por la misma interfaz por la que la aprendiste, y poison reverse, que anuncia la ruta caída con métrica infinita.
+L: Segunda familia: estado de enlace. Acá cada router conoce el mapa completo de la red. Intercambian el estado de sus enlaces, arman una base de datos idéntica, y cada uno calcula el mejor camino con el algoritmo de Dijkstra, también llamado SPF, primero el camino más corto.
+T: El ejemplo es OSPF. Su métrica es el costo, que se calcula según el ancho de banda: más ancho de banda, menor costo. Converge rápido, escala bien y se organiza en áreas, donde el área cero es el backbone al que se conectan todas las demás.
+L: Y aparece un tercero en los exámenes: EIGRP, de Cisco, que se llama vector distancia avanzado o híbrido. Usa el algoritmo DUAL y una métrica compuesta basada en ancho de banda y retardo.
+T: Ahora, la tabla que se toma siempre: la distancia administrativa. Cuando un router aprende la misma red por dos fuentes distintas, ¿a cuál le cree? A la de menor distancia administrativa, que mide la confiabilidad del origen.
+L: Los valores en Cisco: red directamente conectada, cero. Ruta estática, uno. EIGRP interno, 90. OSPF, 110. RIP, 120. Y si querés sumar, BGP externo es 20.
+T: El truco: EIGRP, OSPF y RIP en orden alfabético, E, O, R, coinciden con el orden numérico: 90, 110, 120.
+L: Ojo con la confusión entre métrica y distancia administrativa. La métrica compara rutas aprendidas por el mismo protocolo. La distancia administrativa compara rutas de protocolos distintos.
+T: Una clasificación más: protocolos de gateway interior, IGP, que se usan dentro de una organización, como RIP, OSPF y EIGRP; y de gateway exterior, EGP, que conectan organizaciones o sistemas autónomos, como BGP, que es el que mantiene unida a Internet.
+L: Desde seguridad: los protocolos de enrutamiento se autentican. Un atacante que inyecta rutas falsas puede desviar tráfico. Por eso OSPF y RIP versión 2 admiten autenticación entre vecinos.
+T: Resumen: conectadas, estáticas y dinámicas. Vector distancia, como RIP, cuenta saltos con máximo 15. Estado de enlace, como OSPF, usa Dijkstra y costo. Distancias administrativas: cero, uno, 90, 110, 120.
+L: Tres preguntas en pantalla. En el próximo, las redes WAN: Frame Relay, PPP y HDLC.
+Q: ¿Qué algoritmo usa OSPF para calcular la mejor ruta? | Dijkstra (SPF) | Bellman-Ford | DUAL | OSPF es estado de enlace y calcula con Dijkstra sobre su base de datos.
+Q: ¿Cuál es la distancia administrativa de RIP? | 120 | 110 | 90 | Estática 1, EIGRP 90, OSPF 110, RIP 120.
+Q: En RIP, ¿qué significa una métrica de 16 saltos? | Red inalcanzable | La mejor ruta | Ruta estática | El máximo útil es 15; 16 es infinito.
+
+=== id: a6
+titulo: Redes WAN: Frame Relay, PPP y HDLC
+pilar: A
+puntos: A16, A17
+resumen: Características y tipos de WAN, conmutación de circuitos y de paquetes, y los tres protocolos de enlace del programa.
+L: Último episodio del pilar de Redes: las redes WAN y sus protocolos. Frame Relay, PPP y HDLC.
+T: Una WAN es una red de área amplia: conecta sitios separados geográficamente, ciudades, provincias, países. Y una diferencia clave con la LAN: en general los enlaces no son tuyos, se los alquilás a un proveedor de telecomunicaciones.
+L: Por eso la WAN suele tener menos velocidad y más costo por megabit que la LAN, y opera sobre todo en las capas 1 y 2 de OSI.
+T: Tipos de conexión WAN. Uno: líneas dedicadas o arrendadas, punto a punto, siempre disponibles y con ancho de banda garantizado, pero caras.
+L: Dos: conmutación de circuitos, donde se establece un circuito exclusivo mientras dura la comunicación, como la telefonía clásica o RDSI. Tres: conmutación de paquetes, donde muchos usuarios comparten la red del proveedor y los datos viajan en paquetes: X.25, Frame Relay, y ATM, que usa celdas fijas de 53 bytes.
+T: Y hoy dominan MPLS, Metro Ethernet, la fibra al hogar, y las VPN sobre Internet. Pero el programa pide los tres clásicos, así que vamos.
+L: Frame Relay. Es un protocolo de conmutación de paquetes de capa 2, sucesor más liviano de X.25. Más liviano porque deja la corrección de errores a las capas superiores: si una trama llega mal, se descarta.
+T: Funciona con circuitos virtuales. El más común es el PVC, circuito virtual permanente, configurado de antemano. También existen los SVC, conmutados, que se arman a demanda.
+L: Y acá viene la sigla que más se toma: el DLCI. Es el identificador de conexión de enlace de datos, y tiene significado local. Es decir, identifica el circuito virtual solo en el tramo entre tu router y el switch del proveedor. Del otro lado, el mismo circuito puede tener otro número.
+T: Más siglas. LMI: la interfaz de administración local, la señalización entre tu router y el switch del proveedor; mantiene vivo el enlace e informa el estado de los PVC. CIR: la tasa de información comprometida, el ancho de banda que el proveedor te garantiza.
+L: Si mandás por encima del CIR, el proveedor puede marcar tus tramas con el bit DE, elegible para descarte. Y cuando hay congestión, avisa con FECN, notificación hacia adelante, y BECN, hacia atrás.
+T: Frame Relay es una red NBMA: multiacceso sin broadcast. Muchos sitios comparten la nube, pero no hay difusión nativa. Eso trae problemas con protocolos de enrutamiento y con split horizon.
+L: Pasemos a HDLC: control de enlace de datos de alto nivel. Es un protocolo de capa 2, orientado a bits, estandarizado por ISO, para enlaces seriales sincrónicos punto a punto.
+T: Detalle importante: el HDLC estándar no tiene un campo para indicar qué protocolo de capa 3 transporta. Por eso Cisco hizo su propia versión, con un campo de tipo propietario. Es el encapsulamiento por defecto en las interfaces seriales de Cisco, pero solo interopera con otro Cisco.
+L: Y PPP, el protocolo punto a punto, definido en el RFC 1661. Es estándar, así que funciona entre equipos de distintos fabricantes, y tiene dos componentes que se toman siempre.
+T: LCP, el protocolo de control de enlace: establece, configura, prueba y cierra el enlace, y negocia opciones como autenticación, compresión y multilink. Y NCP, protocolos de control de red: uno por cada protocolo de capa 3 que se transporte, por ejemplo IPCP para IP.
+L: La autenticación de PPP tiene dos opciones. PAP: de dos vías, manda usuario y contraseña en texto plano. Inseguro. CHAP: de tres vías. El servidor manda un desafío, el cliente responde con un hash MD5 del desafío y la clave compartida, y el servidor verifica. La contraseña nunca viaja por el cable, y el desafío se repite periódicamente.
+T: Para vos, que venís de seguridad: PAP es como mandar la clave en una postal. CHAP es como demostrar que sabés la clave sin decirla.
+L: Resumen. WAN: enlaces de proveedor, líneas dedicadas, conmutación de circuitos y de paquetes. Frame Relay: PVC, DLCI local, LMI, CIR. HDLC: orientado a bits, versión Cisco propietaria. PPP: estándar, LCP más NCP, PAP en texto plano y CHAP con desafío.
+T: Con esto cerramos Redes. Tres preguntas en pantalla y en el próximo arrancamos con Windows Server.
+Q: En Frame Relay, ¿qué identifica localmente a un circuito virtual? | DLCI | LMI | CIR | El DLCI tiene significado local, solo entre el router y el switch del proveedor.
+Q: ¿Qué componente de PPP negocia autenticación y compresión? | LCP | NCP | IPCP | LCP gestiona el enlace; NCP encapsula los protocolos de capa 3.
+Q: ¿Qué autenticación PPP nunca envía la contraseña por el enlace? | CHAP | PAP | HDLC | CHAP usa desafío y respuesta con hash.

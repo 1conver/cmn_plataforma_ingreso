@@ -1,0 +1,128 @@
+=== id: d1
+titulo: Diseño de bases de datos y modelo Entidad-Relación
+pilar: D
+puntos: D1, D2, D3, D4, D5
+resumen: Etapas conceptual, lógica y física; entidades, atributos y relaciones; grado y cardinalidad; y cómo reducir un diagrama E-R a tablas.
+L: Frecuencia CMN arranca el pilar de Bases de Datos. Hoy: etapas de diseño y el modelo Entidad-Relación, cinco puntos del programa en un episodio.
+T: Primero, ¿por qué diseñar? Porque una base mal diseñada repite datos, se vuelve inconsistente y cuesta cada vez más mantenerla. El diseño se hace en tres etapas, y es pregunta fija.
+L: Diseño conceptual: representa la realidad que queremos guardar, sin pensar en ningún motor de base de datos. La herramienta es el modelo Entidad-Relación. Responde a la pregunta: ¿qué datos hay y cómo se relacionan?
+T: Diseño lógico: transforma el modelo conceptual en un modelo de datos concreto, normalmente el relacional: tablas, columnas, claves primarias y foráneas. Acá se aplica la normalización. Es independiente del producto, pero ya no de la tecnología.
+L: Diseño físico: adapta el modelo lógico a un motor específico, como SQL Server o MySQL. Tipos de datos exactos, índices, almacenamiento, particiones, seguridad. Responde: ¿cómo lo guardo para que sea eficiente?
+T: Con, Ló, Fí: conceptual, lógico, físico. Del qué, al cómo en general, al cómo en este motor.
+L: Ahora, el modelo Entidad-Relación, que propuso Peter Chen en 1976. Tiene tres elementos básicos. Entidad: un objeto del mundo real del que queremos guardar datos, como Soldado, Unidad o Vehículo. Se dibuja con un rectángulo.
+T: Atributo: una propiedad de la entidad, como el DNI o el nombre. Se dibuja con un óvalo. El atributo que identifica de forma única a cada ejemplar es el atributo clave, y va subrayado.
+L: Tipos de atributo que se toman. Simple o compuesto: el domicilio es compuesto, porque se divide en calle, número y localidad. Monovaluado o multivaluado: los teléfonos de una persona son multivaluados, y se dibujan con doble óvalo. Y derivado: se calcula a partir de otro, como la edad desde la fecha de nacimiento; se dibuja con óvalo punteado.
+T: Relación: una asociación entre entidades, como Soldado pertenece a Unidad. Se dibuja con un rombo. Y también puede tener atributos propios, por ejemplo, la fecha de alta en esa unidad.
+L: También existen las entidades débiles, que no tienen clave propia y dependen de otra para identificarse. Por ejemplo, las cuotas de un préstamo. Se dibujan con doble rectángulo.
+T: Ahora, el grado de una relación, que pide el programa. Es la cantidad de entidades que participan. Grado uno, unaria o reflexiva: una entidad se relaciona consigo misma, como un Soldado que es jefe de otros soldados.
+L: Grado dos, binaria, la más común: Soldado y Unidad. Grado tres, ternaria: por ejemplo, Oficial, Vehículo y Zona, en una asignación. Y n-aria en general.
+T: Y la cardinalidad, el otro punto. Indica cuántos ejemplares de una entidad se pueden asociar con un ejemplar de la otra. Tres tipos: uno a uno, uno a muchos, y muchos a muchos.
+L: Uno a uno: cada jefe dirige una unidad y cada unidad tiene un jefe. Uno a muchos: una unidad tiene muchos soldados, pero cada soldado está en una sola unidad. Muchos a muchos: un soldado hace muchos cursos y cada curso lo hacen muchos soldados.
+T: Y más fino todavía: la cardinalidad mínima y máxima de cada entidad, o participación. Mínimo cero significa participación opcional; mínimo uno, obligatoria. Se escribe como un par: cero coma ene, uno coma uno.
+L: Y ahora la parte práctica: la reducción del diagrama E-R al modelo relacional, el punto cinco. Son reglas casi mecánicas, y aparecen en desarrollo.
+T: Regla uno: cada entidad fuerte se convierte en una tabla, y su atributo clave, en la clave primaria. Regla dos: un atributo compuesto se divide en columnas simples. Regla tres: un atributo multivaluado se va a una tabla aparte, con la clave de la entidad.
+L: Regla cuatro: relación uno a muchos. No se crea tabla nueva: la clave primaria del lado uno pasa como clave foránea al lado muchos. La unidad no guarda la lista de soldados; cada soldado guarda el código de su unidad.
+T: Regla cinco: relación uno a uno. La clave de una de las dos pasa como clave foránea a la otra, con restricción de valor único. Preferentemente del lado que tiene participación obligatoria.
+L: Regla seis: relación muchos a muchos. Se crea una tabla intermedia, también llamada puente o asociativa, cuya clave primaria es la combinación de las claves de las dos entidades. Y si la relación tenía atributos, como la nota del curso, van en esa tabla.
+T: Regla siete: una relación ternaria también genera una tabla con las tres claves. Y una entidad débil genera una tabla cuya clave incluye la clave de la entidad de la que depende.
+L: Resumen: conceptual, lógico, físico. Entidad rectángulo, atributo óvalo, relación rombo, clave subrayada. Grado: cantidad de entidades. Cardinalidad: uno a uno, uno a muchos, muchos a muchos. Reducción: uno a muchos, clave foránea del lado muchos; muchos a muchos, tabla intermedia.
+T: Tres preguntas en pantalla. En el próximo: el modelo relacional.
+Q: Al reducir una relación N:M al modelo relacional, ¿qué se hace? | Se crea una tabla intermedia con las claves de ambas entidades | Se agrega una clave foránea con UNIQUE | Se elimina la relación | La clave de la tabla puente es la combinación de ambas claves.
+Q: ¿Qué es el grado de una relación en el modelo E-R? | La cantidad de entidades que participan | La cantidad de filas | El nivel de normalización | Unaria, binaria, ternaria o n-aria.
+Q: ¿En qué etapa del diseño se eligen los índices y los tipos de datos del motor? | Diseño físico | Diseño conceptual | Diseño lógico | El físico depende del motor concreto.
+
+=== id: d2
+titulo: El modelo relacional: tablas, dominios, claves, integridad y vistas
+pilar: D
+puntos: D6
+resumen: Codd y el modelo relacional, terminología formal, dominios, superclave, clave candidata, primaria, alternativa y foránea, reglas de integridad y vistas.
+L: Frecuencia CMN. Hoy el modelo relacional: la terminología, la estructura de los datos, las claves y las vistas.
+T: El modelo relacional lo propuso Edgar Codd, de IBM, en 1970, en un artículo que cambió la historia de las bases de datos. La idea: representar los datos como relaciones matemáticas, que en la práctica vemos como tablas.
+L: Vamos con la terminología, porque el examen la pregunta en las dos versiones, la formal y la informal. Relación es la tabla. Tupla es la fila, o registro. Atributo es la columna, o campo.
+T: Y dos medidas que se confunden mucho. El grado de una relación, en el modelo relacional, es la cantidad de atributos, o sea de columnas. Y la cardinalidad de una relación es la cantidad de tuplas, o sea de filas.
+L: Ojo con la trampa: en el modelo Entidad-Relación, grado es la cantidad de entidades que participan en una relación. En el modelo relacional, grado es la cantidad de columnas de una tabla. Misma palabra, distinto significado según el modelo.
+T: El dominio de un atributo es el conjunto de valores válidos que puede tomar. Por ejemplo, el dominio de Jerarquía es el conjunto de grados militares; el de Edad, enteros entre 18 y 65. El dominio incluye el tipo de dato y las restricciones.
+L: Propiedades de una relación, que vienen de la matemática: no hay dos tuplas iguales; el orden de las filas no importa; el orden de las columnas no importa; y cada celda tiene un valor atómico, uno solo. Eso último es justamente la primera forma normal.
+T: Ahora, claves, que es lo más preguntado. Superclave: cualquier conjunto de atributos que identifica de forma única a cada fila. El DNI es superclave; el DNI más el nombre también lo es, aunque le sobre algo.
+L: Clave candidata: una superclave mínima, sin atributos de más. Si le sacás cualquier atributo, deja de identificar. Una tabla puede tener varias: el DNI, el número de legajo, el CUIL.
+T: Clave primaria: la clave candidata que el diseñador elige como identificador principal. No puede ser nula ni repetirse. Las candidatas que no se eligieron se llaman claves alternativas.
+L: Y clave foránea, o ajena: un atributo de una tabla que hace referencia a la clave primaria de otra tabla. Es lo que implementa las interrelaciones entre tablas. Por ejemplo, el código de unidad dentro de la tabla Soldado.
+T: Ahora, las reglas de integridad. Integridad de entidad: ningún atributo de la clave primaria puede ser nulo. Si la clave identifica, no puede estar vacía.
+L: Integridad referencial: toda clave foránea tiene que coincidir con una clave primaria existente en la tabla referenciada, o ser nula. No podés tener un soldado asignado a una unidad que no existe.
+T: Y qué pasa si borrás la unidad que tiene soldados. Las opciones: restringir, que impide el borrado; cascada, que borra también los soldados; o poner nulo, que deja la clave foránea en nulo. Las mismas opciones existen para las actualizaciones.
+L: Además está la integridad de dominio, que se implementa con tipos de datos y restricciones CHECK, y las reglas de negocio de cada organización.
+T: Y el valor nulo: representa un dato desconocido o que no aplica. No es cero ni es texto vacío. Y en SQL, nulo comparado con cualquier cosa da desconocido; por eso para buscar nulos se usa IS NULL, nunca igual a NULL.
+L: Y el último elemento del programa: las vistas. Una vista es una tabla virtual, definida por una consulta. No guarda datos propios, salvo las vistas materializadas o indexadas; cada vez que la consultás, ejecuta su consulta sobre las tablas base.
+T: ¿Para qué sirven? Para seguridad, porque podés darle a un usuario acceso a la vista sin darle acceso a las tablas, mostrando solo ciertas columnas o filas. Para simplificar consultas complejas que se usan seguido. Y para independencia lógica: si cambia la estructura de las tablas, la vista puede seguir mostrando lo mismo.
+L: Y Codd además publicó doce reglas, en realidad trece, numeradas de la cero a la doce, para decidir si un motor es verdaderamente relacional. Por ejemplo, la regla del acceso garantizado: todo dato se alcanza con el nombre de tabla, la clave primaria y el nombre de columna.
+T: Resumen: Codd 1970. Relación tabla, tupla fila, atributo columna. Grado: columnas; cardinalidad: filas. Dominio: valores válidos. Claves: superclave, candidata, primaria, alternativa y foránea. Integridad de entidad y referencial. Vista: tabla virtual para seguridad y simplificación.
+L: Tres preguntas en pantalla. En el próximo, el tema más temido: normalización hasta la quinta forma normal.
+Q: En el modelo relacional, ¿qué es la cardinalidad de una relación? | La cantidad de tuplas (filas) | La cantidad de atributos | La cantidad de tablas relacionadas | El grado es la cantidad de columnas; la cardinalidad, la de filas.
+Q: ¿Qué es una clave candidata? | Una superclave mínima | Cualquier columna con datos | Una clave foránea | Si se le quita un atributo deja de identificar unívocamente.
+Q: ¿Qué establece la integridad referencial? | Toda clave foránea debe existir en la tabla referenciada o ser nula | La clave primaria no puede ser nula | Toda columna debe tener índice | La integridad de entidad es la que prohíbe nulos en la clave primaria.
+
+=== id: d3
+titulo: Normalización: de la primera a la quinta forma normal
+pilar: D
+puntos: D7
+resumen: Anomalías, dependencias funcionales, 1FN, 2FN, 3FN, Boyce-Codd, dependencias multivaluadas y 4FN, dependencias de unión y 5FN, con ejemplos militares.
+L: Frecuencia CMN. Llegó el episodio que marcamos como prioridad uno: normalización, hasta la quinta forma normal.
+T: Vamos despacio y con un ejemplo que nos acompaña todo el episodio. Una sola planilla de entregas de material: número de entrega, fecha, DNI del oficial, nombre del oficial, código de unidad, nombre de unidad, y una lista de ítems con código, nombre y cantidad.
+L: ¿Qué problemas tiene guardar todo junto? Tres anomalías. Anomalía de inserción: no puedo cargar una unidad nueva si todavía no tuvo entregas. Anomalía de actualización: si cambia el nombre de la unidad, tengo que cambiarlo en cien filas, y si me olvido una, quedan datos inconsistentes. Anomalía de borrado: si borro la única entrega de un oficial, pierdo que ese oficial existe.
+T: La normalización es el proceso de descomponer tablas para eliminar esas anomalías y la redundancia, sin perder información. Se hace por etapas: las formas normales. Cada una exige cumplir la anterior.
+L: Un concepto previo: dependencia funcional. B depende funcionalmente de A si, conociendo A, conocés un único valor de B. Se escribe A determina B. El DNI determina el nombre del oficial. A A se lo llama determinante.
+T: Primera forma normal. Todos los atributos son atómicos: un solo valor por celda, sin grupos repetitivos ni listas. Y la tabla tiene clave primaria. En nuestro ejemplo, la lista de ítems viola la primera forma normal. Solución: sacar los ítems a una tabla aparte, Ítem de entrega, con número de entrega, código de ítem, nombre de ítem y cantidad.
+L: Segunda forma normal. Primera forma normal, más: ningún atributo que no sea clave depende de solo una parte de la clave primaria. Esto solo puede pasar cuando la clave es compuesta.
+T: En Ítem de entrega la clave es compuesta: número de entrega más código de ítem. La cantidad depende de los dos: cuánto de ese ítem en esa entrega. Pero el nombre del ítem depende solo del código de ítem. Eso es una dependencia parcial. Solución: tabla Ítem, con código y nombre. Y en Ítem de entrega queda número, código y cantidad.
+L: Tercera forma normal. Segunda forma normal, más: ningún atributo no clave depende de otro atributo no clave. O sea, sin dependencias transitivas.
+T: En la tabla Entrega tenemos número, fecha, DNI, nombre del oficial, código de unidad y nombre de unidad. El número de entrega determina el DNI, y el DNI determina el nombre del oficial. Eso es transitivo: número, DNI, nombre. Igual con la unidad. Solución: tablas Oficial y Unidad. Entrega queda con número, fecha y DNI como clave foránea.
+L: La frase que resume las tres primeras: cada atributo depende de la clave, de toda la clave, y de nada más que la clave. La clave, primera forma normal; toda la clave, segunda; nada más que la clave, tercera.
+T: Forma normal de Boyce-Codd. Es una tercera forma normal más estricta: todo determinante tiene que ser clave candidata. Aparece cuando hay varias claves candidatas compuestas que se superponen. Si en una tabla un atributo no clave determina parte de la clave, viola Boyce-Codd aunque esté en tercera.
+L: Ahora sí, las superiores. Cuarta forma normal. Boyce-Codd, más: no hay dependencias multivaluadas no triviales. Una dependencia multivaluada se da cuando un valor de A determina un conjunto de valores de B, independiente de otro conjunto C.
+T: Ejemplo. Tabla Oficial, Curso, Idioma. Un oficial tiene varios cursos y varios idiomas, y los cursos no tienen nada que ver con los idiomas. Si el oficial tiene tres cursos y dos idiomas, para guardar todas las combinaciones necesitás seis filas. Redundancia pura.
+L: Solución de cuarta: separar las dos dependencias independientes en dos tablas: Oficial Curso, y Oficial Idioma. Tres filas más dos filas, y listo.
+T: Quinta forma normal, también llamada forma normal de proyección-unión. Cuarta, más: toda dependencia de unión está implicada por las claves candidatas. Traducido: la tabla no se puede descomponer en tablas más chicas sin perder información, salvo que esa descomposición siga las claves.
+L: El ejemplo clásico es ternario, y cíclico. Oficial, Vehículo, Zona. Con una regla de negocio: si un oficial está habilitado en un tipo de vehículo, y ese vehículo opera en una zona, y el oficial está asignado a esa zona, entonces el oficial conduce ese vehículo en esa zona.
+T: En ese caso, la tabla ternaria tiene redundancia, y no se puede partir en dos tablas sin generar tuplas falsas, que se llaman espurias, al volver a unirlas. Pero sí se puede partir en tres proyecciones binarias: Oficial Vehículo, Vehículo Zona y Oficial Zona. Al unir las tres, se recupera exactamente la original.
+L: El fundamento teórico de las dependencias multivaluadas y de esta descomposición viene de los trabajos de Ronald Fagin, de IBM, en 1977 y 1979. Por eso en los apuntes se habla del teorema de Fagin.
+T: Y un consejo para el oral: en la práctica, la mayoría de los sistemas se normalizan hasta tercera o Boyce-Codd. Y a veces se desnormaliza a propósito, por rendimiento, por ejemplo en almacenes de datos para reportes.
+L: Resumen: anomalías de inserción, actualización y borrado. Primera: atómico y sin grupos repetitivos. Segunda: sin dependencias parciales. Tercera: sin transitivas. Boyce-Codd: todo determinante es clave candidata. Cuarta: sin multivaluadas independientes, dos tablas. Quinta: dependencias de unión, tres proyecciones sin tuplas espurias.
+T: Tres preguntas en pantalla. Y en la plataforma tenés el laboratorio de normalización paso a paso. En el próximo, el último: T-SQL.
+Q: ¿Qué elimina la segunda forma normal? | Dependencias parciales de una clave compuesta | Dependencias transitivas | Dependencias multivaluadas | Solo puede violarse si la clave primaria es compuesta.
+Q: Oficial con varios cursos y varios idiomas independientes en una misma tabla viola... | La cuarta forma normal | La primera forma normal | La segunda forma normal | Son dependencias multivaluadas independientes; se separan en dos tablas.
+Q: ¿Qué exige la forma normal de Boyce-Codd? | Que todo determinante sea clave candidata | Que no haya valores nulos | Que la tabla tenga índice clustered | Es una versión más estricta de la tercera forma normal.
+
+=== id: d4
+titulo: T-SQL: consultas, manipulación, tablas, vistas e índices
+pilar: D
+puntos: D8, D9, D10, D11, D12
+resumen: Categorías de SQL, SELECT con WHERE, GROUP BY, HAVING y JOIN, INSERT, UPDATE y DELETE, CREATE TABLE con restricciones, vistas e índices clustered y nonclustered.
+L: Último episodio de la serie, Frecuencia CMN. Hoy, T-SQL: los cinco puntos que cierran el programa.
+T: T-SQL, Transact-SQL, es el dialecto de SQL de Microsoft SQL Server, que viene de Sybase. Agrega cosas al estándar, como variables, control de flujo, manejo de errores y la cláusula TOP. Pero la base es SQL estándar.
+L: SQL se divide en sublenguajes. DDL, lenguaje de definición de datos: CREATE, ALTER y DROP, para crear y modificar estructuras. DML, lenguaje de manipulación de datos: INSERT, UPDATE y DELETE. La consulta, SELECT, a veces se separa como DQL.
+T: DCL, control de datos: GRANT, REVOKE y en SQL Server, DENY, para permisos. Y TCL, control de transacciones: BEGIN TRANSACTION, COMMIT y ROLLBACK.
+L: Empecemos por las consultas de selección. La estructura completa es: SELECT columnas, FROM tabla, WHERE condición sobre filas, GROUP BY columnas para agrupar, HAVING condición sobre grupos, y ORDER BY para ordenar.
+T: Y el orden lógico en que el motor lo procesa no es el orden en que se escribe. Es: FROM, WHERE, GROUP BY, HAVING, SELECT, ORDER BY. Fue Wanda, Guardó Herramientas, Salió Ordenando.
+L: Esa es la explicación de la trampa más común. WHERE filtra filas antes de agrupar, así que no puede usar funciones de agregado. HAVING filtra grupos después de agrupar, y sí puede. Si querés las unidades con más de diez soldados, es {GROUP BY unidad HAVING COUNT(*) > 10|grup bai unidad, javing count asterisco mayor que diez}.
+T: Las funciones de agregado: COUNT, SUM, AVG, MIN y MAX. Operadores del WHERE: los de comparación, BETWEEN para rangos, IN para listas, LIKE con comodines, donde el porcentaje es cualquier cantidad de caracteres y el guion bajo uno solo, e IS NULL.
+L: En T-SQL, para limitar filas se usa TOP, por ejemplo SELECT TOP 5. En MySQL, en cambio, es LIMIT al final. Y DISTINCT elimina duplicados.
+T: Los JOIN combinan tablas. INNER JOIN: solo las filas que coinciden en las dos. LEFT JOIN: todas las de la izquierda, y de la derecha solo las que coinciden, con nulos donde no. RIGHT JOIN: al revés. FULL JOIN: todas de ambos lados. Y CROSS JOIN: el producto cartesiano, todas con todas.
+L: Pasamos a manipulación. INSERT INTO tabla, columnas, VALUES y los valores. UPDATE tabla SET columna igual valor WHERE condición. DELETE FROM tabla WHERE condición.
+T: La regla de supervivencia: nunca un UPDATE ni un DELETE sin WHERE, salvo que de verdad quieras tocar todas las filas. Y en producción, dentro de una transacción, para poder hacer ROLLBACK.
+L: Y la comparación que se toma siempre: DELETE versus TRUNCATE. DELETE borra fila por fila, registra cada una en el log de transacciones, admite WHERE y dispara triggers. TRUNCATE TABLE vacía la tabla desasignando páginas, con registro mínimo, es mucho más rápido, no admite WHERE, no dispara triggers, reinicia el contador IDENTITY, y no se puede usar si la tabla es referenciada por una clave foránea.
+T: Creación y gestión de tablas. CREATE TABLE con columnas, tipos de datos y restricciones. Tipos comunes en SQL Server: INT, DECIMAL, VARCHAR y NVARCHAR para texto, la N es para Unicode, DATE, DATETIME y BIT para verdadero o falso.
+L: Las restricciones: NOT NULL; PRIMARY KEY; FOREIGN KEY con REFERENCES; UNIQUE, que impide repetidos pero, a diferencia de la clave primaria, admite un nulo; CHECK, para validar valores; y DEFAULT, el valor por defecto. Y {IDENTITY(1,1)|identiti uno coma uno} para que el número se genere solo.
+T: Para modificar una tabla: ALTER TABLE con ADD para agregar columnas o restricciones, ALTER COLUMN para cambiar el tipo, y DROP COLUMN. Y DROP TABLE la elimina por completo, estructura y datos.
+L: Vistas. CREATE VIEW nombre AS y un SELECT. Después se consulta como si fuera una tabla. Se modifica con ALTER VIEW y se borra con DROP VIEW. Dos opciones avanzadas: WITH CHECK OPTION, que impide insertar o modificar a través de la vista filas que la vista no mostraría; y WITH SCHEMABINDING, que impide cambiar las tablas base de forma que rompa la vista, y es requisito para indexarla.
+T: Y el último punto: índices. Un índice es una estructura, un árbol B, que acelera las búsquedas, como el índice de un libro. El costo: ocupa espacio y hace más lentas las inserciones y modificaciones, porque hay que mantenerlo.
+L: En SQL Server hay dos tipos. El índice clustered, o agrupado, define el orden físico en que se guardan las filas. Las hojas del árbol son los datos mismos. Por eso solo puede haber uno por tabla. Y por defecto se crea con la clave primaria.
+T: El índice nonclustered, o no agrupado, es una estructura aparte cuyas hojas tienen punteros a las filas: el identificador de fila, o la clave del clustered. Puede haber muchos, hasta 999 por tabla en las versiones actuales.
+L: El truco: el clustered es la guía telefónica, ordenada físicamente por apellido. El nonclustered es el índice al final de un libro, que te dice en qué página está cada tema.
+T: Sintaxis: CREATE CLUSTERED INDEX nombre ON tabla, columna; o CREATE NONCLUSTERED INDEX. Con UNIQUE, garantiza que no haya repetidos. Con INCLUDE, agregás columnas para que el índice cubra la consulta. Y DROP INDEX para eliminarlo.
+L: Desde seguridad, cerramos con un clásico tuyo: la inyección SQL. Se previene con consultas parametrizadas y procedimientos almacenados, y con el mínimo privilegio en los permisos de la base.
+T: Resumen: DDL, DML, DCL y TCL. Orden lógico: FROM, WHERE, GROUP BY, HAVING, SELECT, ORDER BY. WHERE filtra filas, HAVING grupos. DELETE versus TRUNCATE. Restricciones PRIMARY KEY, FOREIGN KEY, UNIQUE, CHECK y DEFAULT. Vistas con CHECK OPTION. Índice clustered, uno, orden físico; nonclustered, muchos, punteros.
+L: Con esto terminamos el recorrido completo del programa y del Modelo. Tres preguntas en pantalla, y en el laboratorio SQL podés practicar consultas reales en el navegador.
+T: Muchísima suerte en noviembre. Estudiá con constancia, dormí bien, entrená el físico, y andá a rendir con la tranquilidad de haberlo preparado. Cambio y fuera.
+Q: ¿Qué cláusula filtra grupos después de un GROUP BY? | HAVING | WHERE | ORDER BY | WHERE filtra filas antes de agrupar y no admite agregados.
+Q: ¿Cuántos índices clustered puede tener una tabla en SQL Server? | Uno | Hasta 999 | Uno por columna | Define el orden físico de las filas, que es uno solo.
+Q: ¿Cuál de estas afirmaciones sobre TRUNCATE TABLE es correcta? | Reinicia IDENTITY y no admite WHERE | Dispara los triggers DELETE | Registra cada fila en el log | DELETE es el que registra fila por fila, admite WHERE y dispara triggers.

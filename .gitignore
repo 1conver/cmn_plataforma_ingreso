@@ -2,4 +2,7 @@
 *.bak
 *.tmp
 __pycache__
-.vercel
+*.env*
+*CONEXIONES*.txt
+.claude/
+tools/.podcast_cache/

@@ -1,0 +1,176 @@
+=== id: b1
+titulo: Active Directory: instalación, controladores de dominio, árbol, bosque y FSMO
+pilar: B
+puntos: B1, B2
+resumen: Cómo se instala un DC, qué es un dominio, un árbol y un bosque, el Catálogo Global y los cinco roles FSMO.
+L: Arrancamos el pilar de Windows en Frecuencia CMN. Hoy: instalación, controladores de dominio, y la estructura de árbol y bosque de Active Directory.
+T: Este es uno de los focos que marcamos como prioridad, así que vamos con calma y con ejemplos.
+L: Primero, ¿qué es Active Directory? Es el servicio de directorio de Microsoft: una base de datos jerárquica que guarda usuarios, equipos, grupos, impresoras, y las políticas que se les aplican. Permite autenticar y autorizar de forma centralizada.
+T: El rol en Windows Server se llama AD DS, Servicios de dominio de Active Directory. Y el servidor que lo ejecuta y guarda una copia de la base es el controlador de dominio, el DC.
+L: Vamos con la instalación, que es el punto uno del programa. Antes de instalar, la planificación: elegir la edición, Standard o Datacenter; elegir entre instalación con experiencia de escritorio o Server Core, que no tiene interfaz gráfica y por eso tiene menos superficie de ataque.
+T: Después, preparar el servidor: nombre definitivo, dirección IP fija, y un DNS configurado. Un DC con IP dinámica es un error de manual.
+L: Luego se agrega el rol AD DS desde el Administrador del servidor, y se promueve el equipo a controlador de dominio. En Windows Server 2008 eso se hacía con el comando dcpromo; desde 2012 se hace con el asistente del Administrador del servidor o con PowerShell.
+T: En la promoción elegís si creás un bosque nuevo, un dominio nuevo en un bosque existente, o si agregás un DC adicional a un dominio que ya existe. Definís el nombre DNS del dominio, el nivel funcional, la contraseña del modo de restauración, DSRM, y las rutas de la base NTDS.dit, los registros y la carpeta SYSVOL.
+L: NTDS.dit es el archivo de la base de datos de Active Directory. Y SYSVOL es la carpeta compartida que guarda los scripts de inicio de sesión y las directivas de grupo, y se replica entre todos los DC.
+T: Ahora la estructura lógica. El dominio es la unidad básica: un límite de administración y de replicación, con un nombre DNS, por ejemplo ejercito punto local. Dentro del dominio organizás objetos en unidades organizativas, las OU, que sirven para delegar administración y aplicar directivas de grupo.
+L: Varios dominios que comparten un espacio de nombres DNS contiguo forman un árbol. Por ejemplo, ejercito punto local, y debajo, sistemas punto ejercito punto local. El hijo lleva el nombre del padre.
+T: Y el bosque es el conjunto de uno o más árboles. Los árboles de un bosque pueden tener nombres DNS distintos, no contiguos. Lo que comparten es lo importante: un único esquema, una única configuración y un Catálogo Global.
+L: Y una frase que tenés que decir en la mesa oral: el bosque es el límite de seguridad de Active Directory. No el dominio, el bosque.
+T: Entre dominios del mismo bosque hay relaciones de confianza automáticas, bidireccionales y transitivas, basadas en Kerberos versión 5. Transitiva significa que si A confía en B y B confía en C, A confía en C.
+L: El Catálogo Global, el GC, es un DC que además guarda una copia parcial de todos los objetos del bosque, con los atributos más buscados. Sirve para búsquedas en todo el bosque y para resolver la pertenencia a grupos universales en el inicio de sesión.
+T: Y llegamos a los roles FSMO, operaciones de maestro único flexible. Active Directory es multimaestro: podés hacer cambios en cualquier DC. Pero hay cinco tareas que, para evitar conflictos, las hace un solo DC. Son cinco roles.
+L: Dos por bosque. El maestro de esquema, que es el único que puede modificar el esquema, o sea las definiciones de clases y atributos. Y el maestro de nomenclatura de dominios, que autoriza agregar o quitar dominios del bosque.
+T: Y tres por cada dominio. El maestro RID, que reparte bloques de identificadores relativos para que cada DC pueda crear objetos con SID únicos. El emulador de PDC, que sincroniza la hora del dominio, recibe con prioridad los cambios de contraseña y maneja los bloqueos de cuenta. Y el maestro de infraestructura, que actualiza las referencias a objetos de otros dominios.
+L: El truco: dos de bosque, esquema y nomenclatura; tres de dominio, R, P, I: RID, PDC e Infraestructura.
+T: Desde seguridad: el DC es la joya de la corona. Si un atacante compromete un DC o se lleva el NTDS.dit, tiene los hashes de todo el dominio. Por eso los DC se aíslan, se parchean primero y se administran con cuentas separadas.
+L: Resumen: instalar con IP fija y DNS, agregar AD DS y promover. Dominio, unidad de administración; árbol, dominios con DNS contiguo; bosque, límite de seguridad con esquema y catálogo global comunes. FSMO: dos de bosque, tres de dominio.
+T: Tres preguntas en pantalla. En el próximo: sitios y replicación.
+Q: ¿Cuál es el límite de seguridad de Active Directory? | El bosque | El dominio | La unidad organizativa | El bosque comparte esquema, configuración y catálogo global, y es la frontera de seguridad.
+Q: ¿Qué roles FSMO existen una sola vez por bosque? | Maestro de esquema y maestro de nomenclatura de dominios | RID y PDC | PDC e infraestructura | Los otros tres (RID, PDC e infraestructura) existen en cada dominio.
+Q: ¿Qué caracteriza a un árbol de dominios? | Comparten un espacio de nombres DNS contiguo | Tienen esquemas distintos | No tienen confianzas entre sí | El dominio hijo lleva el nombre del padre.
+
+=== id: b2
+titulo: Sitios y protocolos de replicación de Active Directory
+pilar: B
+puntos: B3
+resumen: Qué es un sitio, replicación intrasitio e intersitio, KCC, vínculos de sitio y los protocolos RPC sobre IP y SMTP.
+L: Hoy en Frecuencia CMN: sitios y protocolos de replicación. Un tema corto pero con preguntas muy precisas.
+T: Recordemos que el dominio y el bosque son la estructura lógica de Active Directory. Los sitios son la estructura física: reflejan cómo está conectada la red de verdad.
+L: Un sitio es un conjunto de una o más subredes IP bien conectadas, es decir, con enlaces rápidos y confiables entre sí. Típicamente, un edificio o una base. Dos unidades en distintas provincias unidas por un enlace WAN serían dos sitios.
+T: ¿Para qué sirven los sitios? Para tres cosas. Uno: controlar la replicación entre controladores de dominio para no saturar la WAN. Dos: que los clientes se autentiquen con un DC cercano, de su propio sitio. Y tres: que ciertos servicios, como DFS, ofrezcan el recurso más cercano.
+L: Ahora, replicación. Como Active Directory es multimaestro, un cambio hecho en un DC tiene que llegar a todos los demás. Y se replica distinto adentro de un sitio que entre sitios.
+T: Replicación intrasitio. Se da entre DC del mismo sitio. Asume buena conexión, así que prioriza la velocidad: es por notificación de cambios. Cuando un DC tiene un cambio, espera unos 15 segundos y avisa a sus compañeros, que piden el cambio. No se comprime, porque sobra ancho de banda.
+L: Un detalle de examen: en Windows 2000 ese retardo era de 5 minutos; desde Windows Server 2003 es de 15 segundos. Si ves las dos cifras, ya sabés por qué.
+T: Replicación intersitio. Se da entre sitios, sobre enlaces más lentos y caros. Entonces prioriza el ancho de banda: es programada, por defecto cada 180 minutos, y comprimida.
+L: ¿Quién arma los caminos de replicación? El KCC, el comprobador de coherencia de conocimiento. Es un proceso que corre en cada DC y genera automáticamente la topología. Dentro del sitio arma un anillo, de forma que ningún DC quede a más de tres saltos.
+T: Entre sitios, en cada sitio se elige un servidor cabeza de puente, el bridgehead, que es el que intercambia los cambios con el otro sitio. Así no replican todos contra todos por la WAN.
+L: Los sitios se unen con vínculos de sitio. Cada vínculo tiene un costo, que indica preferencia: menor costo, camino preferido; una programación, en qué horarios se puede replicar; y un intervalo.
+T: Y llegamos a lo que el programa llama protocolos de replicación de sitios. Hay dos transportes. El primero es RPC sobre IP: es el normal, sincrónico, y sirve para replicar todo.
+L: El segundo es SMTP, el protocolo del correo. Es asincrónico, sirve para enlaces muy poco confiables, pero tiene una limitación clave: solo puede replicar las particiones de esquema, configuración y catálogo global. No puede replicar la partición de dominio. Además requiere una entidad emisora de certificados.
+T: O sea: si dos sitios tienen DC del mismo dominio, la replicación entre ellos tiene que ser por RPC sobre IP.
+L: Ya que estamos, las particiones del directorio, que se replican con distinto alcance. La partición de esquema y la de configuración se replican a todo el bosque. La de dominio, solo a los DC de ese dominio. Y existen particiones de aplicación, por ejemplo para las zonas DNS integradas.
+T: Y para el SYSVOL, donde están las directivas, desde Windows Server 2008 se usa DFS Replication; antes se usaba FRS.
+L: Herramientas que podés nombrar en un desarrollo: la consola Sitios y servicios de Active Directory, y los comandos repadmin y dcdiag para diagnosticar.
+T: Resumen: sitio igual a subredes bien conectadas. Intrasitio: notificación, unos 15 segundos, sin comprimir. Intersitio: programada, 180 minutos por defecto, comprimida, por bridgeheads. Transportes: RPC sobre IP para todo, SMTP solo para esquema, configuración y catálogo global.
+L: Tres preguntas en pantalla. En el próximo: cuentas y grupos, con la famosa estrategia AGDLP.
+Q: ¿Cómo es la replicación intrasitio? | Por notificación de cambios y sin comprimir | Programada y comprimida | Solo por SMTP | Dentro del sitio sobra ancho de banda y se prioriza la rapidez.
+Q: ¿Qué partición NO puede replicarse por SMTP? | La partición de dominio | La de esquema | La de configuración | SMTP solo sirve para esquema, configuración y catálogo global.
+Q: ¿Qué componente genera automáticamente la topología de replicación? | El KCC | El PDC Emulator | El servidor DHCP | El Knowledge Consistency Checker corre en cada DC.
+
+=== id: b3
+titulo: Cuentas, grupos locales y globales, y la estrategia AGDLP
+pilar: B
+puntos: B4, B5
+resumen: Cuentas locales y de dominio, tipos y ámbitos de grupos, y cómo asignar permisos de forma escalable.
+L: Frecuencia CMN, episodio de cuentas y grupos. Lo que en el programa figura como Cuentas, y Grupos locales y globales.
+T: Arranquemos por las cuentas. Una cuenta de usuario identifica a una persona o a un servicio, y le permite autenticarse. Hay dos grandes tipos: cuentas locales y cuentas de dominio.
+L: La cuenta local vive en la base SAM de un solo equipo y solo sirve para entrar a ese equipo. La cuenta de dominio vive en Active Directory y sirve para entrar a cualquier equipo del dominio. Esa es la gracia del dominio: un usuario, una contraseña, para todo.
+T: Cada cuenta tiene un identificador de seguridad, el SID, que es único e irrepetible. Los permisos se asignan al SID, no al nombre. Por eso si borrás una cuenta y la volvés a crear con el mismo nombre, no recupera sus permisos: es otro SID.
+L: Dos formas de nombre de inicio de sesión. El nombre principal de usuario, UPN, con formato tipo correo: usuario arroba dominio. Y el nombre anterior a Windows 2000, con formato DOMINIO barra invertida usuario.
+T: Hay cuentas integradas, como Administrador e Invitado. Buenas prácticas: renombrar o deshabilitar las que no se usan, el Invitado deshabilitado, y nunca usar la cuenta de administrador del dominio para tareas diarias.
+L: Las políticas de contraseñas y de bloqueo de cuenta se definen con directivas de grupo, las GPO, a nivel dominio: longitud mínima, complejidad, vigencia, historial, y cuántos intentos fallidos bloquean la cuenta.
+T: Ahora, grupos. ¿Para qué? Para no asignar permisos usuario por usuario. Asignás el permiso al grupo y metés a los usuarios en el grupo.
+L: Los grupos tienen dos características: tipo y ámbito. El tipo puede ser de seguridad, que sirve para asignar permisos, o de distribución, que solo sirve para listas de correo.
+T: Y el ámbito, que es lo que se toma. Primero, los grupos locales, que viven en un equipo que no es controlador de dominio, en su SAM, y solo sirven para recursos de ese equipo.
+L: En el dominio hay tres ámbitos. Global: sus miembros solo pueden ser cuentas y grupos de su mismo dominio, pero se puede usar para dar permisos en cualquier dominio del bosque. Se usa para agrupar personas por función o rol, por ejemplo, Operadores de Sistemas.
+T: Local de dominio: puede tener miembros de cualquier dominio confiable, pero solo se usa para dar permisos en su propio dominio. Se usa para agrupar por recurso, por ejemplo, Lectores de la carpeta Logística.
+L: Universal: puede tener miembros de cualquier dominio del bosque y dar permisos en cualquier dominio del bosque. Su membresía se guarda en el Catálogo Global, así que conviene que cambie poco.
+T: Y ahora la estrategia que es casi seguro que aparece: AGDLP. Son las iniciales en inglés de los pasos. A: las cuentas, accounts. G: se meten en grupos globales, según su rol. DL: los grupos globales se meten en grupos locales de dominio, según el recurso. P: y a los grupos locales de dominio se les asignan los permisos.
+L: La regla mnemotécnica: A Gabriel Dale Licencia Permanente. Cuentas, Globales, Locales de dominio, Permisos.
+T: ¿Por qué es tan buena? Porque separa quién es la persona de qué recurso usa. Si entra un operador nuevo, lo metés en el grupo global de su rol y automáticamente tiene todos los accesos del rol. Si se crea un recurso nuevo, creás su grupo local de dominio y metés los roles que corresponden. Nunca tocás permisos usuario por usuario.
+L: En bosques con varios dominios aparece la variante AGUDLP: cuentas a globales, globales a universales, universales a locales de dominio, y permisos. Y en un servidor que no es DC, el equivalente es AGLP, con el grupo local del equipo.
+T: Dato práctico para un caso de desarrollo: si te piden que la sección Logística lea y el jefe modifique una carpeta, armás un global Logística con las cuentas, un global Jefes Logística, un local de dominio Carpeta Logística Lectura y otro Carpeta Logística Modificación, y asignás los permisos NTFS a esos locales de dominio.
+L: Resumen: cuentas locales en la SAM, de dominio en Active Directory, permisos al SID. Grupos de seguridad o distribución. Ámbitos: global por rol, local de dominio por recurso, universal para el bosque. Y AGDLP: los permisos siempre al local de dominio.
+T: Tres preguntas en pantalla. En el próximo: permisos NTFS, compartidos e impresoras.
+Q: En AGDLP, ¿a qué grupo se le asignan los permisos sobre el recurso? | Al grupo local de dominio | Al grupo global | A cada cuenta de usuario | Las cuentas van a globales, los globales a locales de dominio, y estos reciben los permisos.
+Q: ¿Qué miembros puede tener un grupo global? | Cuentas y grupos de su mismo dominio | Cuentas de cualquier dominio del bosque | Solo equipos | El global agrupa por rol dentro de su dominio.
+Q: ¿A qué se asignan realmente los permisos en Windows? | Al SID | Al nombre de usuario | A la contraseña | Por eso una cuenta recreada con el mismo nombre no recupera permisos.
+
+=== id: b4
+titulo: Permisos compartidos, NTFS e impresoras
+pilar: B
+puntos: B6, B7, B8, B9
+resumen: Permisos de recurso compartido vs NTFS, permisos efectivos, herencia, configuración y permisos de impresoras, pool y prioridades.
+L: Frecuencia CMN. Hoy un combo que en el examen viene junto: permisos de archivos compartidos, seguridad NTFS, y configuración y permisos de impresoras.
+T: Empecemos con la idea central. Cuando accedés a una carpeta por la red, pasás por dos porteros. El primero es el permiso de recurso compartido, el share. El segundo es el permiso NTFS, del sistema de archivos.
+L: Los permisos de recurso compartido son pocos y simples: Lectura, Cambio y Control total. Solo se aplican cuando entrás por la red, por ejemplo con una ruta UNC, barra barra servidor barra carpeta.
+T: Los permisos NTFS son más finos y se aplican siempre, tanto por red como sentado frente al equipo. Los estándar son: Control total, Modificar, Lectura y ejecución, Mostrar el contenido de la carpeta, Lectura y Escritura. Y detrás hay permisos especiales más granulares.
+L: Ahora, la regla de oro, que es pregunta segura. Primero, dentro de cada portero los permisos se acumulan: si estás en dos grupos, uno con Lectura y otro con Escritura, tenés las dos. Segundo, un Denegar explícito gana sobre un Permitir.
+T: Y tercero, entre los dos porteros, cuando entrás por la red, rige el más restrictivo. Si el compartido te da Lectura y NTFS te da Modificar, por la red terminás con Lectura. Si entrás localmente, solo cuenta NTFS.
+L: La imagen: dos porteros en fila. Pasás solo hasta donde te deja el más estricto.
+T: Por eso la práctica recomendada es dejar el compartido amplio, por ejemplo Control total para Usuarios autenticados, y hacer el control fino con NTFS. Así administrás en un solo lugar.
+L: Herencia. Por defecto, los permisos NTFS de una carpeta se heredan a las subcarpetas y archivos. Podés deshabilitar la herencia y copiar o quitar los permisos heredados. Y un detalle fino: un Permitir explícito le gana a un Denegar heredado.
+T: Una trampa clásica: qué pasa al copiar o mover. Si copiás un archivo, el nuevo archivo hereda los permisos de la carpeta destino. Si lo movés dentro del mismo volumen, conserva sus permisos. Si lo movés a otro volumen, es como copiar y borrar, así que hereda los del destino.
+L: Y no olvidemos la auditoría, que aparece en los casos. Para registrar accesos necesitás dos cosas: habilitar la directiva de auditoría de acceso a objetos por GPO, y configurar la lista de auditoría, la SACL, en la carpeta. Los eventos van al registro de Seguridad del Visor de eventos.
+T: Pasamos a impresoras. Primero, vocabulario de Microsoft: la impresora es el objeto lógico, la cola de software que ves en Windows. El dispositivo de impresión es el aparato físico. Y el servidor de impresión es el equipo que comparte las impresoras y administra las colas, con el servicio Cola de impresión, el spooler.
+L: Configurar una impresora en el servidor implica: instalar el rol de Servicios de impresión, agregar la impresora con su puerto, normalmente un puerto TCP/IP con la dirección del equipo, instalar los controladores para las arquitecturas de los clientes, de 32 y 64 bits, y compartirla.
+T: Después se publica en Active Directory para que los usuarios la encuentren, y se puede desplegar a los equipos por directiva de grupo. La consola para todo esto es Administración de impresión.
+L: Los permisos de impresora son tres. Imprimir: por defecto lo tiene Todos. Administrar documentos: pausar, reanudar o cancelar trabajos ajenos; por defecto, el propietario creador lo tiene sobre sus propios documentos. Y Administrar esta impresora: cambiar la configuración, compartir, y asignar permisos.
+T: Y dos configuraciones que se toman. El pool de impresoras: una impresora lógica asociada a varios puertos con dispositivos idénticos. Los trabajos van al primer dispositivo libre. Sirve para repartir la carga.
+L: Y las prioridades, que son lo inverso: varias impresoras lógicas apuntando al mismo dispositivo físico, cada una con una prioridad de 1 a 99, donde 99 es la más alta. A los jefes, o a las órdenes urgentes, les das la impresora lógica de prioridad 99.
+T: También podés definir horarios de disponibilidad, por ejemplo, impresiones grandes solo de noche, y páginas de separación.
+L: Resumen: compartido solo por red; NTFS siempre; se acumulan dentro de cada uno, Denegar explícito gana, y por red rige el más restrictivo. Impresora lógica versus dispositivo; permisos Imprimir, Administrar documentos, Administrar impresora; pool, una lógica y varios dispositivos; prioridad, varias lógicas y un dispositivo, de 1 a 99.
+T: Tres preguntas en pantalla. En el próximo: DNS, WINS y DHCP.
+Q: Compartido: Lectura. NTFS: Modificar. ¿Qué permiso efectivo tenés al entrar por la red? | Lectura | Modificar | Control total | Por red rige el más restrictivo de los dos conjuntos.
+Q: ¿Qué es un pool de impresoras? | Una impresora lógica asociada a varios dispositivos idénticos | Varias impresoras lógicas con distinta prioridad | Una impresora sin controlador | El pool reparte los trabajos entre dispositivos libres.
+Q: ¿Qué prioridad es la más alta en una impresora de Windows? | 99 | 1 | 0 | Las prioridades van de 1 (más baja) a 99 (más alta).
+
+=== id: b5
+titulo: Servicios de red: DNS, WINS y DHCP
+pilar: B
+puntos: B10, B11, B12
+resumen: Zonas y registros DNS, resolución NetBIOS con WINS y tipos de nodo, DHCP con DORA, ámbitos, reservas y opciones.
+L: Frecuencia CMN. Hoy, tres servicios de infraestructura que siempre aparecen: DNS, WINS y DHCP.
+T: Empezamos por DNS, el sistema de nombres de dominio. Traduce nombres a direcciones IP. Es jerárquico: la raíz, los dominios de primer nivel como punto ar, después los de segundo nivel, y así.
+L: Y para Active Directory es indispensable: los clientes encuentran a los controladores de dominio preguntándole al DNS. Sin DNS, no hay dominio que funcione.
+T: Conceptos de zonas. Una zona de búsqueda directa resuelve nombre a IP. Una zona de búsqueda inversa resuelve IP a nombre.
+L: Tipos de zona. Primaria: la copia editable. Secundaria: copia de solo lectura que se actualiza por transferencia de zona. De rutas internas, o stub: solo tiene los registros para saber quién es el servidor autoritativo. Y la integrada en Active Directory, que guarda la zona dentro del directorio, se replica con AD y permite actualizaciones dinámicas seguras.
+T: Los registros que tenés que saber. A: nombre a dirección IPv4. Cuádruple A: nombre a IPv6. PTR: la inversa, IP a nombre. CNAME: un alias. MX: el servidor de correo. NS: los servidores de nombres de la zona. SOA: el inicio de autoridad, con los datos de la zona.
+L: Y el que es clave para Active Directory: el registro SRV, de servicio. Indica qué servidor ofrece un servicio, por ejemplo, ele dap y kerberos. Así un cliente encuentra a su controlador de dominio.
+T: La consulta puede ser recursiva, donde el servidor te devuelve la respuesta final, o iterativa, donde te devuelve una referencia a otro servidor más cercano a la respuesta. DNS usa el puerto 53, en UDP y también TCP.
+L: Pasamos a WINS, el servicio de nombres de Internet de Windows. Resuelve nombres NetBIOS a direcciones IP. NetBIOS es el sistema de nombres planos de las redes Microsoft antiguas, con nombres de hasta 15 caracteres.
+T: Antes de que Active Directory dependiera de DNS, en Windows NT, WINS era fundamental. Hoy es un servicio legado, pero está en el programa y además se toma con un detalle: los tipos de nodo NetBIOS.
+L: Los tipos de nodo indican cómo un cliente resuelve nombres NetBIOS. Nodo b: por difusión, broadcast. Nodo p: punto a punto, solo consulta al servidor WINS. Nodo m: mixto, primero broadcast y después WINS. Nodo h: híbrido, primero WINS y si falla, broadcast. El h es el predeterminado cuando hay un servidor WINS configurado.
+T: Otra alternativa sin servidor era el archivo LMHOSTS, una lista estática de nombres NetBIOS e IP. Y desde seguridad, vos sabés que NetBIOS y su resolución por broadcast son un regalo para ataques de envenenamiento de nombres. Por eso hoy se recomienda deshabilitarlo.
+L: Y el tercero: DHCP, el protocolo de configuración dinámica de host. Entrega automáticamente la configuración IP: dirección, máscara, puerta de enlace, servidores DNS, y más.
+T: El proceso se llama DORA, cuatro mensajes. Discover: el cliente, que todavía no tiene IP, manda un broadcast buscando servidores. Offer: el servidor le ofrece una dirección. Request: el cliente pide formalmente esa oferta. Acknowledge: el servidor confirma. DORA la exploradora.
+L: Usa UDP, puerto 67 en el servidor y 68 en el cliente. Y como el Discover es broadcast, no atraviesa routers. Para que un servidor DHCP atienda varias subredes, se configura un agente de retransmisión DHCP, en Cisco, el comando {ip helper-address|ai pi jelper adres}.
+T: Conceptos del servidor. El ámbito, o scope: el rango de direcciones que entrega para una subred. Las exclusiones: direcciones del rango que no se entregan, por ejemplo, las de servidores e impresoras. Las reservas: una IP fija para una dirección MAC determinada. Y la concesión, o lease: el tiempo que el cliente puede usar la IP; en Windows, por defecto, ocho días.
+L: Las opciones más comunes. Opción 003: el router, la puerta de enlace. Opción 006: los servidores DNS. Opción 015: el nombre de dominio DNS. Y si todavía hay WINS: la 044 con los servidores WINS y la 046 con el tipo de nodo.
+T: Dos detalles de Windows. En un dominio, el servidor DHCP tiene que estar autorizado en Active Directory, para evitar servidores DHCP truchos. Y se integra con DNS: puede registrar los registros A y PTR de los clientes de forma dinámica.
+L: Resumen: DNS resuelve nombres a IP, zonas directa e inversa, registros A, PTR, CNAME, MX, NS, SOA y SRV, puerto 53. WINS resuelve NetBIOS, nodos b, p, m y h, con h por defecto. DHCP: DORA, puertos 67 y 68, ámbitos, exclusiones, reservas y opciones 003, 006 y 015.
+T: Tres preguntas en pantalla. En el próximo: acceso remoto, VPN, RADIUS y DFS.
+Q: ¿Cuál es el orden correcto de DHCP? | Discover, Offer, Request, Acknowledge | Offer, Discover, Request, Acknowledge | Request, Offer, Discover, Acknowledge | DORA: el cliente descubre, el servidor ofrece, el cliente solicita y el servidor confirma.
+Q: ¿Qué registro DNS permite a un cliente encontrar un controlador de dominio? | SRV | MX | CNAME | Los registros de servicio publican LDAP y Kerberos.
+Q: ¿Qué tipo de nodo NetBIOS consulta primero a WINS y luego usa broadcast? | Nodo h (híbrido) | Nodo b | Nodo m | El nodo m hace lo inverso: primero broadcast y luego WINS.
+
+=== id: b6
+titulo: RRAS, VPN, IPSec, RADIUS y DFS
+pilar: B
+puntos: B13, B14, B15, B16, B17
+resumen: Enrutamiento y acceso remoto, túneles PPTP y L2TP, IPSec con AH y ESP, RADIUS con NPS, y los espacios de nombres y la replicación DFS.
+L: Último episodio de Windows en Frecuencia CMN. Un combo grande: RRAS, VPN con PPTP y L2TP, IPSec, RADIUS y DFS.
+T: Y este es tu terreno, así que acá podés lucirte en la mesa oral. Arrancamos.
+L: RRAS es el servicio de Enrutamiento y acceso remoto de Windows Server. Hoy forma parte del rol Acceso remoto. Hace tres cosas: convierte al servidor en un router, con rutas estáticas o RIP; hace NAT para compartir una salida a Internet; y ofrece acceso remoto, por marcado telefónico en su época, o por VPN.
+T: Una VPN es una red privada virtual: un túnel que lleva tráfico privado sobre una red pública, como Internet. Tiene que dar confidencialidad, integridad y autenticación. Y el programa pide dos protocolos de túnel: PPTP y L2TP.
+L: PPTP, protocolo de túnel punto a punto. Es de Microsoft, de los noventa. Usa TCP puerto 1723 para el control y el protocolo GRE para encapsular los datos. El cifrado lo pone MPPE, y la autenticación típica era MS-CHAP versión 2.
+T: Y el problema: MS-CHAP versión 2 está roto desde hace años y MPPE es débil. Por eso PPTP se considera obsoleto e inseguro. Si en un examen te preguntan qué recomendarías, la respuesta nunca es PPTP.
+L: L2TP, protocolo de túnel de capa 2. Es un estándar que combina ideas de PPTP y de L2F de Cisco. Usa UDP puerto 1701. Y lo importante: L2TP por sí solo no cifra nada. Solo arma el túnel.
+T: Por eso siempre se usa con IPSec: L2TP sobre IPSec. IPSec aporta el cifrado, la integridad y la autenticación de los equipos, con certificados o con una clave precompartida.
+L: Vamos con IPSec, que el programa pide como protocolo de encriptación. Es un conjunto de protocolos que protege el tráfico en la capa de red. Tiene dos protocolos de seguridad.
+T: AH, encabezado de autenticación: da integridad y autenticación del origen, pero no cifra. Es el protocolo IP número 51. Y ESP, carga de seguridad encapsulada: da confidencialidad, o sea cifrado, además de integridad. Es el protocolo IP número 50.
+L: El truco: AH Autentica, ESP Encripta y además autentica. Y dos modos: transporte, que protege solo la carga útil entre dos equipos, y túnel, que encapsula el paquete IP completo, típico entre dos routers o gateways.
+T: Las claves se negocian con IKE, intercambio de claves por Internet, por UDP 500. Y cuando hay NAT de por medio, se usa NAT Traversal por UDP 4500. Hoy también existen SSTP, que va por HTTPS en el puerto 443, e IKE versión 2.
+L: Pasamos a RADIUS: servicio de usuario de acceso telefónico con autenticación remota. Es un protocolo AAA: autenticación, quién sos; autorización, qué podés hacer; y contabilidad, accounting, qué hiciste y cuánto tiempo.
+T: El esquema tiene tres actores. El usuario. El cliente RADIUS, que no es el usuario sino el equipo de acceso: el servidor VPN, el punto de acceso Wi-Fi o el switch. Y el servidor RADIUS, que valida las credenciales, normalmente contra Active Directory.
+L: En Windows Server, el servidor RADIUS se llama NPS, Servidor de directivas de redes. Antes se llamaba IAS. Usa UDP 1812 para autenticación y 1813 para contabilidad. Y es la base de 802.1X, el control de acceso por puerto en redes cableadas e inalámbricas.
+T: La ventaja: centralizás. En vez de tener usuarios en cada VPN y cada punto de acceso, todos le preguntan a un único servidor de directivas.
+L: Y cerramos con DFS, el sistema de archivos distribuido. Tiene dos componentes que se toman por separado.
+T: El primero: espacios de nombres DFS. Arman una vista lógica única de carpetas compartidas que en realidad están en muchos servidores. El usuario ve barra barra ejército barra documentos, y no sabe ni le importa en qué servidor está cada carpeta.
+L: Pueden ser basados en dominio, que se guardan en Active Directory y son tolerantes a fallos, o independientes. Cada carpeta puede tener varios destinos, y el cliente recibe una referencia al más cercano según su sitio. Si un servidor cae, usa otro.
+T: El segundo: Replicación DFS, DFSR. Mantiene sincronizadas las copias de una carpeta entre servidores. Es multimaestro y usa compresión diferencial remota, RDC, que solo transmite las partes del archivo que cambiaron. Ideal para enlaces WAN.
+L: Resumen: RRAS, enrutamiento, NAT y acceso remoto. PPTP: TCP 1723 más GRE, MPPE, inseguro. L2TP: UDP 1701, no cifra solo, se usa con IPSec. IPSec: AH autentica, ESP cifra; modos transporte y túnel; IKE por UDP 500. RADIUS: AAA, NPS en Windows, puertos 1812 y 1813. DFS: espacios de nombres y replicación con RDC.
+T: Con esto cerramos Windows. Tres preguntas en pantalla y en el próximo arrancamos Desarrollo con diagramas de flujo.
+Q: ¿Qué protocolo de IPSec brinda cifrado? | ESP | AH | GRE | AH solo da integridad y autenticación; ESP agrega confidencialidad.
+Q: ¿Por qué L2TP se usa junto con IPSec? | Porque L2TP no cifra por sí mismo | Porque IPSec reemplaza a TCP | Porque L2TP solo funciona en LAN | L2TP arma el túnel; IPSec aporta la seguridad.
+Q: ¿Cómo se llama el servidor RADIUS de Windows Server? | NPS (Servidor de directivas de redes) | WINS | DFSR | NPS reemplazó a IAS desde Windows Server 2008.

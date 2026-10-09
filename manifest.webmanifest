@@ -1,0 +1,16 @@
+{
+  "name": "CMN · Sistema Computación de Datos",
+  "short_name": "CMN SCD",
+  "description": "Preparación para el ingreso al CMN como Oficial del Cuerpo Profesional (Sistema de Computación de Datos).",
+  "lang": "es-AR",
+  "start_url": "./#/inicio",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b0f0d",
+  "theme_color": "#0b0f0d",
+  "icons": [
+    { "src": "assets/img/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "assets/img/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
+    { "src": "assets/img/icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

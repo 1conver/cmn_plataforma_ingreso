@@ -1,0 +1,215 @@
+=== id: c1
+titulo: Diagramas de flujo: dibujar un algoritmo
+pilar: C
+puntos: C11, C13
+resumen: Qué es un algoritmo, sus características, los símbolos normalizados del diagrama de flujo, sus reglas y cómo resolver un problema graficándolo.
+L: Frecuencia CMN arranca el pilar de Desarrollo con un tema que está en el Modelo de Examen y no en el Programa: diagramas de flujo y resolución de problemas.
+T: Y es el primer punto del Modelo. O sea, es lo primero que piensa quien arma el examen. No se negocia.
+L: Primero, ¿qué es un algoritmo? Es una secuencia finita y ordenada de pasos, sin ambigüedad, que resuelve un problema. La receta de cocina es el ejemplo de siempre.
+T: Y las características que se toman en un completamiento: un algoritmo tiene que ser preciso, es decir, cada paso claro y en orden; definido, que con los mismos datos de entrada da siempre el mismo resultado; y finito, que termina en algún momento.
+L: Preciso, definido y finito. Y además tiene entrada, proceso y salida. Esa es la estructura de cualquier problema: qué datos tengo, qué hago con ellos, y qué resultado muestro.
+T: La resolución de problemas tiene etapas. Análisis: entender el problema y definir entradas y salidas. Diseño: armar el algoritmo, con diagrama de flujo o pseudocódigo. Codificación: pasarlo a un lenguaje. Prueba y depuración. Y documentación y mantenimiento.
+L: Ahora, el diagrama de flujo. Es la representación gráfica de un algoritmo, con símbolos normalizados por ANSI y por la norma ISO 5807, unidos por flechas que indican el orden.
+T: Vamos con los símbolos, que son pregunta segura. Terminal: un óvalo, o rectángulo con las puntas redondeadas. Marca el Inicio y el Fin.
+L: Proceso: un rectángulo. Adentro va una acción o un cálculo, por ejemplo, suma igual a suma más nota.
+T: Entrada y salida: un paralelogramo, el rectángulo inclinado. Ahí va leer un dato o mostrar un resultado. En muchos apuntes argentinos vas a ver además símbolos específicos: uno para entrada por teclado y otro, con forma de pantalla, para la salida por pantalla. Y el símbolo de documento para salida impresa.
+L: Decisión: un rombo. Adentro va una condición que se responde con verdadero o falso, sí o no. Y tiene exactamente dos salidas.
+T: Conector: un círculo chico, para unir partes del diagrama en la misma página. Y conector de página, con forma de pentágono, como una casita, para continuar en otra hoja.
+L: Proceso predefinido o subproceso: un rectángulo con dos rayas verticales a los costados. Indica que se llama a un módulo que está definido en otro lado.
+T: Y las líneas de flujo, las flechas, que marcan el orden de ejecución.
+L: Las reglas de construcción. Un solo inicio y un solo fin. El flujo va de arriba hacia abajo y de izquierda a derecha. Las flechas no se cruzan, y si hace falta, se usan conectores. Todo símbolo, salvo el fin, tiene una flecha de salida. Y el rombo de decisión tiene siempre dos salidas.
+T: Ahora, las tres estructuras de control, que vienen del teorema de Böhm y Jacopini, que vamos a ver en otro episodio. Secuencia: un paso después del otro. Selección: un rombo que bifurca el camino según la condición. Iteración: un rombo cuya salida vuelve hacia arriba, armando un bucle.
+L: En el bucle hay dos variantes. Mientras: pregunta antes de entrar, así que el cuerpo puede no ejecutarse nunca. Repetir hasta: ejecuta primero y pregunta después, así que el cuerpo se ejecuta al menos una vez.
+T: Hagamos uno de cabeza. Problema: ingresar las notas de un examen hasta que se ingrese un cero, y mostrar el promedio. Análisis: entrada, notas; salida, promedio; condición de corte, nota igual a cero.
+L: Diagrama: Inicio. Proceso: suma igual a cero y contador igual a cero. Entrada: leer nota. Decisión: ¿nota distinta de cero? Si es verdadero: proceso, suma igual a suma más nota y contador igual a contador más uno; leer nota otra vez, y la flecha vuelve al rombo.
+T: Si es falso, salimos del bucle. Y acá hay un detalle de oro: antes de dividir, otra decisión: ¿contador mayor que cero? Si es así, mostrar suma dividido contador. Si no, mostrar que no se ingresaron notas. Fin.
+L: Esa segunda decisión es la que separa un siete de un diez: evitar la división por cero. Los correctores aman ver que pensaste en el caso borde.
+T: Y fijate dos conceptos que aparecieron: el contador, que suma de a uno, y el acumulador, que suma valores variables. Los dos se inicializan en cero antes del bucle.
+L: En la plataforma tenés el laboratorio de algoritmos: escribís el pseudocódigo y te dibuja el diagrama de flujo solo. Usalo para comparar con lo que dibujaste en papel.
+T: Resumen: algoritmo preciso, definido y finito. Símbolos: óvalo terminal, rectángulo proceso, paralelogramo entrada y salida, rombo decisión, círculo conector, rectángulo con barras subproceso. Un inicio, un fin, decisiones con dos salidas, arriba hacia abajo.
+L: Tres preguntas en pantalla. En el próximo: pseudocódigo y prueba de escritorio.
+Q: ¿Qué símbolo representa una decisión en un diagrama de flujo? | Rombo | Paralelogramo | Óvalo | El rombo contiene una condición y tiene exactamente dos salidas.
+Q: ¿Cuáles son las características de un algoritmo? | Preciso, definido y finito | Rápido, corto y eficiente | Compilado, enlazado y ejecutado | Además debe tener entrada, proceso y salida.
+Q: ¿Qué estructura ejecuta su cuerpo al menos una vez? | Repetir hasta | Mientras | Si entonces | Repetir evalúa la condición al final.
+
+=== id: c2
+titulo: Pseudocódigo y prueba de escritorio
+pilar: C
+puntos: C12, C13
+resumen: Convenciones de pseudocódigo estilo PSeInt, variables, tipos, operadores, estructuras de control, contadores, acumuladores y cómo hacer una prueba de escritorio.
+L: Frecuencia CMN. Hoy el segundo punto del Modelo de Examen: pseudocódigo. Y su compañero inseparable: la prueba de escritorio.
+T: El pseudocódigo es una forma de escribir un algoritmo en lenguaje casi natural, con palabras clave en español, sin la sintaxis estricta de un lenguaje real. Está a mitad de camino entre el diagrama y el código.
+L: En Argentina la herramienta más usada para enseñarlo es PSeInt, así que vamos a usar sus convenciones. Un programa empieza con Algoritmo y el nombre, y termina con FinAlgoritmo.
+T: Las variables guardan datos que cambian; las constantes, datos que no cambian. Tipos básicos: entero, real, carácter o cadena, y lógico, que es verdadero o falso. Se declaran con Definir, por ejemplo: Definir edad Como Entero.
+L: La asignación se escribe con una flechita hacia la izquierda: {edad <- 25|edad flecha veinticinco}. Se lee: a edad se le asigna 25. Ojo: no es el igual matemático. {contador <- contador + 1|contador flecha contador más uno} tiene sentido en pseudocódigo y es absurdo en matemática.
+T: Entrada y salida: Leer, para tomar un dato del teclado, y Escribir, para mostrarlo.
+L: Operadores. Aritméticos: suma, resta, multiplicación, división, potencia, y MOD, el resto de la división entera. MOD es estrella de examen: un número es par si el número MOD 2 es igual a cero.
+T: Relacionales: mayor, menor, igual, distinto, mayor o igual, menor o igual. Y lógicos: Y, O, NO. Con Y, la condición es verdadera solo si las dos partes son verdaderas. Con O, alcanza con una.
+L: Las estructuras de control. Selección simple y doble: Si condición Entonces, lo que se hace si es verdadero, SiNo, lo que se hace si es falso, FinSi. Y selección múltiple: Segun variable Hacer, con un caso para cada valor, y De Otro Modo.
+T: Repetición, tres formas. Mientras condición Hacer, FinMientras: pregunta antes; puede no ejecutarse nunca. Repetir, Hasta Que condición: pregunta después; se ejecuta al menos una vez, y termina cuando la condición se vuelve verdadera.
+L: Y Para: {Para i <- 1 Hasta 10 Con Paso 1 Hacer ... FinPara|Para i flecha 1 hasta 10 con paso 1 hacer, fin para}. Se usa cuando sabés de antemano cuántas vueltas vas a dar. La variable i se incrementa sola.
+T: Trampa clásica: Mientras repite mientras la condición es verdadera. Repetir Hasta Que repite hasta que la condición es verdadera, o sea, mientras es falsa. Son lógicas opuestas.
+L: Tres patrones que tenés que reconocer. Contador: {c <- c + 1|ce flecha ce más uno}, cuenta ocurrencias. Acumulador: {s <- s + x|ese flecha ese más equis}, suma valores. Y bandera: una variable lógica que marca si algo ocurrió, por ejemplo, {encontrado <- Verdadero|encontrado flecha verdadero}.
+T: Y la regla: contadores y acumuladores se inicializan antes del bucle. Un acumulador de producto, como en el factorial, se inicializa en uno, no en cero.
+L: Ahora, la prueba de escritorio. Es ejecutar el algoritmo a mano, paso a paso, anotando en una tabla el valor de cada variable después de cada instrucción. Sirve para verificar que el algoritmo funciona y, en el examen, para responder qué muestra este algoritmo.
+T: Hagamos una. Algoritmo: {Leer n; f <- 1; Para i <- 1 Hasta n: f <- f * i; FinPara; Escribir f.|leer ene. efe flecha uno. Para i flecha uno hasta ene: efe flecha efe por i. Fin para. Escribir efe.} Con n igual a 4.
+L: Tabla: columnas n, i, f. Arranca n en 4, f en 1. Vuelta uno: i es 1, f es 1 por 1, uno. Vuelta dos: i es 2, f es 1 por 2, dos. Vuelta tres: i es 3, f es 2 por 3, seis. Vuelta cuatro: i es 4, f es 6 por 4, veinticuatro.
+T: Sale del Para y escribe 24. Es el factorial de 4. Si en el examen te dan el código sin decirte qué hace, la prueba de escritorio te lo revela.
+L: Consejo: en la prueba de escritorio no saltees pasos aunque parezca obvio. La mayoría de los errores de examen están en la última vuelta del bucle o en la condición de corte: si era menor o menor o igual.
+T: En la plataforma, el laboratorio hace la prueba de escritorio automática: ejecuta el pseudocódigo y te muestra la tabla paso a paso. Hacé primero la tuya en papel y después compará.
+L: Resumen: Algoritmo y FinAlgoritmo; asignación con flecha; Leer y Escribir; MOD para el resto; Si, Segun, Mientras, Repetir y Para; contador, acumulador y bandera; y la prueba de escritorio como tabla de variables vuelta por vuelta.
+T: Tres preguntas en pantalla. En el próximo: traductores e historia de los lenguajes.
+Q: ¿Qué devuelve 17 MOD 5? | 2 | 3 | 3,4 | MOD es el resto de la división entera: 17 = 5 × 3 + 2.
+Q: ¿Cuándo se usa la estructura Para? | Cuando se conoce de antemano la cantidad de repeticiones | Cuando la condición se evalúa al final | Para elegir entre varios valores | Para maneja automáticamente la variable de control.
+Q: ¿Con qué valor se inicializa un acumulador de productos, como en el factorial? | 1 | 0 | -1 | Si arrancara en 0, todo producto daría 0.
+
+=== id: c3
+titulo: Traductores, compiladores, intérpretes e historia de los lenguajes
+pilar: C
+puntos: C2, C3, C15
+resumen: Ensamblador, compilador y sus fases, intérprete, compaginador o enlazador, cargador, bytecode y la línea de tiempo de los lenguajes con ejemplos.
+L: Frecuencia CMN. Hoy, cómo pasa un programa del texto que escribís al procesador. Y de paso, la historia de los lenguajes, que el programa pide explícitamente.
+T: El procesador solo entiende código máquina: unos y ceros. Todo lo demás necesita un traductor. Traductor es el término general: un programa que convierte un programa escrito en un lenguaje a otro lenguaje.
+L: El primero históricamente es el ensamblador: traduce lenguaje ensamblador, con nemónicos como MOV o ADD, a código máquina. Casi uno a uno: cada instrucción en ensamblador es una instrucción de máquina.
+T: Después, el compilador. Traduce todo el programa fuente, de una vez, antes de ejecutarlo, y genera un programa objeto. Si hay errores de sintaxis, te los informa todos y no genera el ejecutable.
+L: Las fases del compilador, que se toman en orden. Análisis léxico: separa el texto en tokens, como palabras clave, identificadores y números. Análisis sintáctico: verifica la gramática y arma el árbol sintáctico. Análisis semántico: verifica el sentido, por ejemplo, tipos compatibles. Generación de código intermedio. Optimización. Y generación de código objeto.
+T: Lé, sin, sem: léxico, sintáctico, semántico. Primero las palabras, después la gramática, después el significado.
+L: Ahora, el que el programa llama compaginador. Es lo que hoy llamamos enlazador o linker, o editor de enlaces. El compilador genera módulos objeto separados; el compaginador los une, junto con las bibliotecas que usa el programa, resuelve las referencias cruzadas entre ellos y genera el ejecutable final.
+T: El enlace puede ser estático, donde el código de la biblioteca se copia dentro del ejecutable, o dinámico, donde la biblioteca se carga en tiempo de ejecución, como las DLL en Windows. Y después está el cargador, el loader, que pone el ejecutable en memoria para que corra.
+L: El intérprete es distinto: traduce y ejecuta instrucción por instrucción, en el momento, sin generar un ejecutable permanente. Ventajas: es más flexible, portable y fácil de depurar. Desventaja: es más lento, porque traduce cada vez que corre.
+T: La imagen: el compilador es un traductor que te entrega el libro entero traducido. El intérprete es un intérprete simultáneo en una conferencia: traduce frase por frase, en vivo.
+L: Y hay modelos mixtos, que conviene nombrar. Java compila a un código intermedio, el bytecode, que ejecuta la máquina virtual de Java. Y la máquina virtual usa compilación justo a tiempo, JIT, para acelerar. Lo mismo hace .NET con su CLR.
+T: Pasamos a la historia de los lenguajes. Primero las generaciones. Primera generación: código máquina. Segunda: ensamblador. Tercera: lenguajes de alto nivel, como FORTRAN, COBOL, C o Java. Cuarta: lenguajes orientados al resultado, como SQL. Quinta: lenguajes de inteligencia artificial y lógica, como Prolog.
+L: Y la línea de tiempo con fechas. Antes de todo, Ada Lovelace escribe en 1843 el primer algoritmo pensado para una máquina. Después, 1957: FORTRAN, de John Backus en IBM, el primer lenguaje de alto nivel exitoso, para cálculo científico.
+T: 1958: LISP, de John McCarthy, el padre del paradigma funcional y de la inteligencia artificial. 1959: COBOL, impulsado por Grace Hopper, orientado a la gestión comercial. FORTRAN, LISP, COBOL: 57, 58, 59. Fórmulas, Listas, Cuentas.
+L: 1960: ALGOL 60, que influyó la sintaxis de casi todo lo que vino después. 1964: BASIC, en Dartmouth, para enseñar. 1967: Simula, el primer lenguaje orientado a objetos.
+T: 1970: Pascal, de Niklaus Wirth, pensado para enseñar programación estructurada. 1972: C, de Dennis Ritchie en los laboratorios Bell, para escribir el sistema UNIX. Ese mismo año, Smalltalk y Prolog.
+L: 1974: SQL en IBM. 1983: C++, de Bjarne Stroustrup, C con clases. 1991: Python, de Guido van Rossum, y Visual Basic. Y 1995, el año mágico de la web: Java, de Sun; JavaScript, de Brendan Eich en Netscape; y PHP, de Rasmus Lerdorf.
+T: 2000: C sharp, de Microsoft. Y después Go, Rust, Swift, Kotlin y TypeScript. El Modelo pide ejemplos de lenguajes, así que asociá cada uno con su uso: C para sistemas, COBOL para bancos, Python para datos y automatización, JavaScript para la web, SQL para bases de datos.
+L: Resumen: ensamblador, compilador con fases léxica, sintáctica, semántica, intermedio, optimización y objeto; compaginador une módulos y bibliotecas; intérprete ejecuta línea por línea; Java mezcla con bytecode y JIT. Historia: FORTRAN 57, LISP 58, COBOL 59, Pascal 70, C 72, C++ 83, Java, JavaScript y PHP 95.
+T: Tres preguntas en pantalla. En el próximo: programación estructurada y paradigmas.
+Q: ¿Qué hace el compaginador o enlazador? | Une módulos objeto y bibliotecas en un ejecutable | Traduce línea por línea | Separa el código en tokens | El linker resuelve las referencias cruzadas entre módulos.
+Q: ¿Cuál fue el lenguaje de 1959 orientado a la gestión comercial? | COBOL | FORTRAN | LISP | FORTRAN es de 1957 (científico) y LISP de 1958 (funcional).
+Q: ¿Qué fase del compilador separa el texto en tokens? | Análisis léxico | Análisis semántico | Optimización | Después viene el sintáctico, que valida la gramática.
+
+=== id: c4
+titulo: Programación estructurada y los seis paradigmas
+pilar: C
+puntos: C4, C5, C14
+resumen: Teorema de Böhm y Jacopini, Dijkstra y el GOTO, diseño descendente, y los paradigmas imperativo, funcional, lógico, heurístico, concurrente y orientado a objetos con sus pilares.
+L: Frecuencia CMN. Hoy, dos temas que suelen venir juntos en desarrollo: la programación estructurada y los paradigmas de programación.
+T: Arranquemos por el problema que vino a resolver la programación estructurada. En los sesenta, los programas saltaban de un lado a otro con la instrucción GOTO, ir a. El resultado era código espagueti: imposible de seguir, de probar y de mantener.
+L: En 1966, Corrado Böhm y Giuseppe Jacopini demostraron un teorema clave: cualquier algoritmo se puede escribir usando solo tres estructuras de control. Secuencia, selección e iteración.
+T: Y en 1968, Edsger Dijkstra publicó una carta famosa: La sentencia GOTO considerada dañina. Ahí argumentó que el GOTO había que evitarlo. Ese es el nacimiento de la programación estructurada.
+L: Los principios. Usar solo secuencia, selección e iteración. Cada estructura con una sola entrada y una sola salida. Diseño descendente, o top-down: partir el problema grande en subproblemas más chicos, y esos en otros, refinando paso a paso. Y modularidad: dividir el programa en módulos con alta cohesión y bajo acoplamiento.
+T: Alta cohesión: cada módulo hace una sola cosa y la hace bien. Bajo acoplamiento: los módulos dependen poco entre sí. Si cambiás uno, no se rompen los demás.
+L: Ahora, paradigmas. Un paradigma es un estilo, una forma de pensar y estructurar la solución de un problema. El programa pide seis: imperativo, funcional, lógico, heurístico, concurrente y orientado a objetos.
+T: Una división previa útil: imperativo versus declarativo. En el imperativo le decís a la máquina cómo hacerlo, paso a paso. En el declarativo le decís qué querés, y ella se encarga del cómo.
+L: Imperativo: el programa es una secuencia de órdenes que cambian el estado, o sea, el valor de las variables. Es el más cercano a cómo funciona la máquina. Ejemplos: C, Pascal, FORTRAN, COBOL. La programación estructurada y la procedural son imperativas.
+T: Funcional: se basa en funciones matemáticas puras, que con la misma entrada siempre dan la misma salida y no tienen efectos secundarios. Datos inmutables, recursión en lugar de bucles, y funciones que reciben o devuelven otras funciones. Ejemplos: LISP, Haskell, Scheme, F sharp. Es declarativo.
+L: Lógico: se basa en la lógica de predicados. Escribís hechos y reglas, y le hacés consultas. El motor busca la respuesta por unificación y retroceso, el backtracking. El ejemplo es Prolog. También es declarativo.
+T: Por ejemplo: hecho, Juan es padre de Pedro; regla, X es abuelo de Z si X es padre de Y e Y es padre de Z. Y le preguntás quién es abuelo de quién.
+L: Heurístico: para problemas donde encontrar la solución exacta es imposible o demasiado costoso, se usan reglas prácticas que dan una buena solución en un tiempo razonable, aunque no sea la óptima. Algoritmos genéticos, búsqueda heurística, sistemas expertos. Muy ligado a la inteligencia artificial.
+T: Concurrente: varias tareas que se ejecutan al mismo tiempo, o intercaladas, y comparten recursos. Hilos, procesos. Los problemas típicos: la condición de carrera, el interbloqueo o deadlock, y la inanición. Y las herramientas: semáforos, que inventó Dijkstra, monitores, exclusión mutua y paso de mensajes. Ejemplos: Ada, Erlang, Go, Java con hilos.
+L: Y orientado a objetos, que el Modelo pide por separado. El programa se organiza en objetos que combinan datos, los atributos, y comportamiento, los métodos. Una clase es el molde; un objeto es una instancia concreta de esa clase.
+T: Los cuatro pilares de la orientación a objetos. Abstracción: quedarte con lo esencial del objeto para tu problema. Encapsulamiento: ocultar los datos internos y exponer solo métodos para manejarlos.
+L: Herencia: una clase hija reutiliza y extiende a una clase padre. Un Vehículo militar y, heredando de él, un Camión y un Blindado. Y polimorfismo: un mismo mensaje produce comportamientos distintos según el objeto. Mover le pedís a todos, y cada uno se mueve a su manera.
+T: El truco: A, E, H, P. Abstracción, Encapsulamiento, Herencia, Polimorfismo. Ejemplos de lenguajes: Simula y Smalltalk como pioneros, y hoy Java, C sharp, C más más y Python.
+L: Y para vos, una conexión con seguridad: el encapsulamiento es el principio de mínimo privilegio aplicado al código. Nadie toca los datos si no es a través de una interfaz controlada.
+T: Resumen: estructurada, secuencia, selección e iteración, Böhm y Jacopini 1966, Dijkstra 1968, top-down, alta cohesión y bajo acoplamiento. Paradigmas: imperativo, el cómo; funcional, funciones puras; lógico, Prolog; heurístico, soluciones aproximadas; concurrente, semáforos y deadlock; objetos, abstracción, encapsulamiento, herencia y polimorfismo.
+L: Tres preguntas en pantalla. En el próximo: UML.
+Q: Según Böhm y Jacopini, ¿qué estructuras alcanzan para escribir cualquier algoritmo? | Secuencia, selección e iteración | Solo recursión | GOTO y etiquetas | Es el fundamento de la programación estructurada.
+Q: ¿Qué lenguaje es el ejemplo típico del paradigma lógico? | Prolog | Haskell | COBOL | Prolog trabaja con hechos, reglas y consultas resueltas por unificación.
+Q: ¿Qué pilar de la POO permite que un mismo mensaje se comporte distinto según el objeto? | Polimorfismo | Encapsulamiento | Abstracción | La herencia reutiliza; el polimorfismo varía el comportamiento.
+
+=== id: c5
+titulo: Desarrollo del software y UML
+pilar: C
+puntos: C1
+resumen: Ciclo de vida del software, modelos de proceso, qué es UML, sus diagramas estructurales y de comportamiento, y la notación del diagrama de clases y de casos de uso.
+L: Frecuencia CMN. Hoy, el primer punto del programa de Desarrollo: desarrollo del software y UML.
+T: Arranquemos por el ciclo de vida del software: las etapas por las que pasa un sistema desde que alguien lo necesita hasta que se deja de usar.
+L: Análisis de requerimientos: qué tiene que hacer el sistema. Diseño: cómo lo va a hacer, la arquitectura. Implementación o codificación. Pruebas. Implantación o despliegue. Y mantenimiento, que suele ser la etapa más larga y más cara.
+T: Esas etapas se organizan con distintos modelos. El modelo en cascada: una etapa después de la otra, sin volver atrás. Es simple y ordenado, pero rígido: si el requerimiento estaba mal, te enterás tarde.
+L: El modelo en espiral, de Boehm, que agrega iteraciones y un fuerte análisis de riesgos en cada vuelta. El incremental, que entrega el sistema por partes. Y los métodos ágiles, como Scrum, con iteraciones cortas y entregas frecuentes.
+T: Y en este contexto aparece UML, el Lenguaje Unificado de Modelado. Es un lenguaje gráfico estándar para especificar, visualizar, construir y documentar sistemas de software, sobre todo orientados a objetos.
+L: Un punto que se confunde: UML no es una metodología ni un lenguaje de programación. Es una notación. Dice cómo dibujar, no en qué orden trabajar.
+T: Su historia: lo crearon a mediados de los noventa los llamados tres amigos: Grady Booch, James Rumbaugh e Ivar Jacobson, unificando sus métodos. En 1997 lo adoptó el OMG, el Object Management Group, como estándar. Hoy está en la versión 2.
+L: UML 2 tiene catorce tipos de diagramas, en dos grandes grupos. Estructurales, que muestran la parte estática del sistema: clases, objetos, componentes, despliegue, paquetes, estructura compuesta y perfiles.
+T: Y de comportamiento, que muestran la dinámica: casos de uso, actividades, máquina de estados, y los de interacción: secuencia, comunicación, tiempos y vista global de interacción.
+L: El más importante es el diagrama de clases. Cada clase es un rectángulo con tres compartimentos: el nombre arriba, los atributos en el medio y los métodos abajo.
+T: Delante de cada atributo o método va la visibilidad. Más: público. Menos: privado. Numeral: protegido. Y la virgulilla: de paquete. Más es público, menos es privado: fácil.
+L: Las relaciones entre clases, que son la parte jugosa. Asociación: una línea simple, dos clases que se relacionan. Con multiplicidad en los extremos: uno, cero punto punto uno, asterisco para muchos, uno punto punto asterisco.
+T: Agregación: una línea con un rombo vacío del lado del todo. Es una relación todo-parte débil: las partes pueden existir sin el todo. Una Unidad agrega Soldados; si se disuelve la unidad, los soldados siguen existiendo.
+L: Composición: rombo lleno. Todo-parte fuerte: si se destruye el todo, se destruyen las partes. Un Pedido y sus Líneas de pedido.
+T: Herencia o generalización: una línea con un triángulo vacío apuntando a la clase padre. Dependencia: una flecha punteada, una clase usa a otra temporalmente. Y realización: línea punteada con triángulo vacío, cuando una clase implementa una interfaz.
+L: El truco: rombo vacío, la parte vive sola; rombo lleno, la parte muere con el todo.
+T: El otro diagrama clave es el de casos de uso. Muestra qué hace el sistema desde el punto de vista del usuario. Los actores son monigotes, que pueden ser personas u otros sistemas. Los casos de uso son óvalos con verbos, como Registrar entrega de material. Y un rectángulo marca el límite del sistema.
+L: Entre casos de uso hay dos relaciones con estereotipos: include, cuando un caso siempre incluye a otro, por ejemplo, todo trámite incluye Autenticarse; y extend, cuando un caso opcionalmente agrega comportamiento a otro.
+T: Y el diagrama de secuencia, que muestra cómo se intercambian mensajes los objetos a lo largo del tiempo, con líneas de vida verticales. Es el que pregunta el examen cuando dice: interacción entre objetos ordenada en el tiempo.
+L: Resumen: ciclo de vida, análisis, diseño, implementación, pruebas, despliegue y mantenimiento; cascada, espiral, incremental y ágil. UML es notación, no metodología; Booch, Rumbaugh y Jacobson; OMG 1997; 14 diagramas estructurales y de comportamiento. Clases: más público, menos privado; rombo vacío agregación, lleno composición, triángulo herencia.
+T: Tres preguntas en pantalla. En el próximo: la web, desde el CERN hasta las tendencias actuales.
+Q: En UML, ¿qué representa un rombo lleno en una relación? | Composición | Agregación | Herencia | En la composición, las partes no existen sin el todo.
+Q: ¿Qué diagrama UML muestra la interacción entre objetos ordenada en el tiempo? | Diagrama de secuencia | Diagrama de clases | Diagrama de despliegue | Es un diagrama de comportamiento, de interacción.
+Q: ¿Qué símbolo indica visibilidad privada en un diagrama de clases? | Menos (-) | Más (+) | Numeral (#) | Más es público, numeral es protegido.
+
+=== id: c6
+titulo: La web: nacimiento, HTML, JavaScript, DHTML y nuevas tendencias
+pilar: C
+puntos: C6, C7, C8, C16
+resumen: De ARPANET al CERN, HTTP y HTML, versiones de HTML, JavaScript y el DOM, qué es DHTML, AJAX, y las tendencias actuales: SPA, PWA, APIs, serverless y WebAssembly.
+L: Frecuencia CMN. Hoy, la historia y el funcionamiento de la web. Tres puntos del programa y uno del Modelo: nacimiento de la programación web, HTML, JavaScript y DHTML, y nuevas tendencias.
+T: Primero, una distinción que se toma: Internet no es lo mismo que la web. Internet es la red de redes, la infraestructura. La web es un servicio que funciona sobre Internet, como lo es el correo electrónico.
+L: Internet viene de ARPANET, de 1969, una red del Departamento de Defensa de Estados Unidos. En 1983 adoptó TCP/IP. Pero la web nace después, en Europa.
+T: En marzo de 1989, Tim Berners-Lee, un físico e informático que trabajaba en el CERN, en Suiza, propone un sistema para compartir documentos entre investigadores usando hipertexto. Entre 1990 y 1991 crea las tres piezas de la web.
+L: HTML, el lenguaje de marcado para escribir los documentos. HTTP, el protocolo para transferirlos entre cliente y servidor. Y la URL, la forma de identificar cada recurso. Además programó el primer servidor web y el primer navegador.
+T: En 1993 aparece Mosaic, del NCSA, el primer navegador popular que mostraba imágenes junto al texto. Y en 1993 el CERN libera la web para uso público, sin regalías. En 1994 nace Netscape Navigator y Berners-Lee funda el W3C, el consorcio que estandariza la web.
+L: Ahora, cómo funciona. El modelo es cliente-servidor. El navegador, el cliente, pide un recurso con HTTP, por ejemplo con el método GET. El servidor responde con un código de estado, como 200 si todo salió bien o 404 si no existe, y con el contenido. El navegador interpreta el HTML y dibuja la página.
+T: HTML es un lenguaje de marcado, no de programación: no tiene lógica, describe la estructura del contenido con etiquetas. Una página tiene la etiqueta html, adentro head, con metadatos y el título, y body, con el contenido visible. Etiquetas como párrafo, encabezados, enlaces con la etiqueta a, imágenes, tablas y formularios.
+L: Las versiones: HTML 2.0 en 1995, el primer estándar. HTML 3.2 en 1997 y HTML 4.01 en 1999, ya con el W3C. XHTML en 2000, más estricto, basado en XML. Y HTML5, recomendación en 2014, con etiquetas semánticas, audio y video nativos, y canvas. Hoy HTML es un estándar vivo que mantiene el WHATWG.
+T: En 1996 llegan las hojas de estilo, CSS, para separar el contenido de la presentación: HTML dice qué es cada cosa, CSS dice cómo se ve.
+L: JavaScript nace en 1995 en Netscape. Lo creó Brendan Eich en unos diez días. Se llamó Mocha, después LiveScript, y finalmente JavaScript por marketing, aunque no tiene nada que ver con Java. Es un lenguaje interpretado que corre en el navegador, del lado del cliente.
+T: Para manipular la página, JavaScript usa el DOM, el modelo de objetos del documento: el navegador convierte el HTML en un árbol de nodos, y JavaScript puede leer y modificar ese árbol, y reaccionar a eventos como un clic.
+L: Y acá aparece DHTML, HTML dinámico. Trampa: DHTML no es un lenguaje ni un estándar. Es un término de fines de los noventa para la combinación de HTML, CSS, JavaScript y el DOM, que permitía que la página cambie en el cliente sin volver a pedirla al servidor. Menús desplegables, animaciones, contenido que aparece y desaparece.
+T: El siguiente salto fue AJAX, en 2005: JavaScript pidiendo datos al servidor en segundo plano, sin recargar la página. Gmail y Google Maps lo popularizaron.
+L: Ahora, lo que el Modelo llama nuevas tendencias en la programación web. Uno: las SPA, aplicaciones de una sola página, con frameworks como React, Angular o Vue. La página se carga una vez y después todo se actualiza con JavaScript.
+T: Dos: las PWA, aplicaciones web progresivas, que se instalan como una app, funcionan sin conexión gracias a un service worker y pueden enviar notificaciones. Esta misma plataforma se puede instalar así en el celular.
+L: Tres: el renderizado del lado del servidor y la generación estática, con frameworks como Next.js, que mejoran la velocidad y el posicionamiento. Cuatro: las APIs REST y GraphQL, con datos en JSON, y la separación entre frontend y backend.
+T: Cinco: arquitecturas de microservicios y serverless, donde no administrás servidores sino funciones que corren en la nube, como AWS Lambda, que vos ya usaste. Seis: WebAssembly, que permite correr código compilado casi a velocidad nativa en el navegador. Y siete: TypeScript, diseño responsive y mobile first, y seguridad por defecto, con HTTPS en todos lados.
+L: Resumen: Internet no es la web; Berners-Lee, CERN, 1989 a 1991, HTML, HTTP y URL; Mosaic 1993; W3C 1994; JavaScript 1995 en el cliente con el DOM; DHTML es la suma de HTML, CSS, JavaScript y DOM; AJAX 2005; y tendencias: SPA, PWA, SSR, APIs, serverless, WebAssembly.
+T: Tres preguntas en pantalla. En el próximo: PHP con MySQL y ASP clásico.
+Q: ¿Quién creó la World Wide Web y dónde? | Tim Berners-Lee en el CERN | Brendan Eich en Netscape | Rasmus Lerdorf en IBM | Entre 1989 y 1991 creó HTML, HTTP y la URL.
+Q: ¿Qué es DHTML? | La combinación de HTML, CSS, JavaScript y DOM | Un estándar formal del W3C | Un lenguaje del lado del servidor | No es un lenguaje: es una técnica de fines de los 90.
+Q: ¿Qué tecnología permite que una PWA funcione sin conexión? | El service worker | El protocolo FTP | El DOM | El service worker intercepta pedidos y sirve recursos cacheados.
+
+=== id: c7
+titulo: Programación web del lado del servidor: PHP con MySQL y ASP clásico
+pilar: C
+puntos: C9, C10
+resumen: Cómo funciona un lenguaje del lado del servidor, instalación y sintaxis de PHP, funciones de acceso a MySQL, y ASP clásico con VBScript sobre IIS.
+L: Último episodio de Desarrollo en Frecuencia CMN. Hoy, programación web del lado del servidor: PHP con MySQL, y ASP con VBScript.
+T: La idea clave: con HTML y JavaScript en el cliente, la página no puede consultar una base de datos de forma segura. Para eso, el código tiene que correr en el servidor. El servidor ejecuta el script, consulta la base, genera HTML, y le manda al navegador solo el resultado.
+L: Por eso, si mirás el código fuente de una página PHP en el navegador, no ves PHP: ves el HTML que generó. El código PHP nunca sale del servidor.
+T: El antecesor de todo esto fue CGI, en 1993: programas en el servidor que generaban páginas. Después vinieron los lenguajes embebidos en el HTML, como PHP y ASP.
+L: PHP lo creó Rasmus Lerdorf en 1994 y 1995. Al principio significaba Personal Home Page; hoy es un acrónimo recursivo: PHP Hypertext Preprocessor. Es de código abierto y es el lenguaje de servidor más usado en la web.
+T: Instalación y entorno. PHP necesita un servidor web: el clásico es Apache con el módulo de PHP, o Nginx con PHP-FPM. Más la base de datos MySQL. Ese combo sobre Linux es la pila LAMP; sobre Windows, WAMP. Y XAMPP es un paquete que instala todo junto para desarrollo.
+L: Y vos conocés bien XAMPP, porque en tu trabajo final lo migraste a servicios independientes justamente porque XAMPP es para desarrollo, no para producción. Ese ejemplo en la mesa oral vale oro.
+T: La configuración de PHP está en el archivo {php.ini|pe hache pe punto ini}. Y la sintaxis básica: el código va entre las etiquetas de apertura, {<?php|menor signo de pregunta pe hache pe}, y de cierre, {?>|signo de pregunta mayor}. Las variables empiezan con signo pesos ($). Cada sentencia termina con punto y coma. Y echo muestra contenido.
+L: Para recibir datos de formularios están las variables superglobales: {$_GET|pesos guion bajo get} para lo que viene en la URL, {$_POST|pesos guion bajo post} para lo que viene en el cuerpo del formulario, y {$_SESSION|pesos guion bajo session} para datos de la sesión, que se inicia con {session_start()|session start}.
+T: Ahora, el acceso a MySQL, que el programa pide explícitamente como funciones de acceso desde PHP. Las funciones clásicas eran las {mysql_*|mai ese cu ele guion bajo}: {mysql_connect()|mai ese cu ele conect} para conectarse, {mysql_select_db()|mai ese cu ele select de be} para elegir la base, {mysql_query()|mai ese cu ele query} para ejecutar una consulta, {mysql_fetch_array()|mai ese cu ele fetch array} para recorrer los resultados, y {mysql_close()|mai ese cu ele clous} para cerrar.
+L: Y la diferencia de examen: {mysql_connect()|mai ese cu ele conect} abre una conexión que se cierra al terminar el script. {mysql_pconnect()|mai ese cu ele pe conect} abre una conexión persistente, que queda abierta en el servidor y se reutiliza en el siguiente pedido, ahorrando el costo de conectarse.
+T: Ojo con algo importante: esas funciones {mysql_*|mai ese cu ele guion bajo} quedaron obsoletas en PHP 5.5 y se eliminaron en PHP 7. Se reemplazan por la extensión mysqli, con funciones como {mysqli_connect()|mai ese cu ele i conect}, {mysqli_query()|mai ese cu ele i query} y {mysqli_fetch_assoc()|mai ese cu ele i fetch asoc}, o por PDO, que sirve para varios motores de base de datos.
+L: Y la razón de fondo es seguridad, tu especialidad: concatenar lo que escribe el usuario dentro de una consulta SQL abre la puerta a la inyección SQL. La solución son las consultas preparadas, con parámetros, que ofrecen mysqli y PDO.
+T: Pasamos a ASP, Active Server Pages, la respuesta de Microsoft, de 1996. Corre sobre IIS, Internet Information Services, el servidor web de Windows. Los archivos tienen extensión punto asp.
+L: Instalación: en Windows Server se agrega el rol Servidor web IIS, y dentro de las características de desarrollo de aplicaciones se habilita ASP. En los Windows de escritorio de los noventa existía el Personal Web Server.
+T: El lenguaje por defecto de ASP clásico es VBScript, un derivado de Visual Basic. También se podía usar JScript. El código va entre los delimitadores {<% y %>|menor porcentaje y porcentaje mayor}. Y para mostrar algo se usa {Response.Write|response punto rait}.
+L: VBScript tiene un único tipo de dato, el Variant, que se adapta al contenido. Se declara con Dim. Las estructuras son If Then Else End If, For Next, Do While Loop y Select Case.
+T: Y los objetos intrínsecos de ASP, que se toman siempre. Request: lo que llega del cliente, formularios y parámetros. Response: lo que se le envía. Server: utilidades, como {Server.CreateObject|server punto create object} para crear objetos o MapPath. Session: datos privados de cada usuario, con un tiempo de expiración que por defecto es de 20 minutos. Y Application: datos globales, compartidos por todos los usuarios.
+L: Application es el cartel de la plaza, lo ve todo el mundo; Session es tu mochila. Y como Application es compartido, para modificarlo se usa {Application.Lock y Unlock|application punto lock y unlock}, para evitar que dos usuarios lo pisen a la vez.
+T: Los eventos de inicio de la aplicación y de la sesión se programan en el archivo {global.asa|global punto asa}. Y el acceso a datos se hace con ADO: un objeto {ADODB.Connection|a de o de be punto conection} para conectarse y un {ADODB.Recordset|a de o de be punto récord set} para recorrer los resultados.
+L: ASP clásico fue reemplazado en 2002 por ASP.NET, y Microsoft anunció en 2023 que VBScript va a ser retirado de Windows. Eso es justamente una nueva tendencia: lo clásico se mantiene por sistemas heredados, pero lo nuevo se hace con otras tecnologías.
+T: Resumen: el código de servidor genera HTML y nunca llega al cliente. PHP: Lerdorf, Apache o Nginx, LAMP, XAMPP, pesos para variables, superglobales, {mysql_connect versus mysql_pconnect|mai ese cu ele conect versus pe conect}, y hoy mysqli o PDO con consultas preparadas. ASP: Microsoft 1996, IIS, VBScript con Variant, objetos Request, Response, Server, Session y Application, {global.asa|global punto asa} y ADO.
+L: Tres preguntas en pantalla. Con esto cerramos Desarrollo; en el próximo arrancamos Bases de Datos.
+Q: ¿Qué diferencia a mysql_pconnect() de mysql_connect()? | Mantiene una conexión persistente reutilizable | Cifra la conexión | Solo funciona con SQL Server | La conexión persistente evita reconectar en cada pedido.
+Q: En ASP clásico, ¿qué objeto guarda datos compartidos por todos los usuarios? | Application | Session | Request | Session es privado de cada usuario.
+Q: ¿Qué reemplazó a las funciones mysql_* eliminadas en PHP 7? | mysqli y PDO | ASP.NET | VBScript | Ambos permiten consultas preparadas contra la inyección SQL.

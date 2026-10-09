@@ -1,188 +1,114 @@
 ================================================================================
-INFORME INTEGRAL DE TRABAJO - PREPARACIÓN DE INGRESO CMN (v2)
-POSTULANTE: FRANCO | ESCALAFÓN: SISTEMA COMPUTACIÓN DE DATOS
-COLEGIO MILITAR DE LA NACIÓN - EJÉRCITO ARGENTINO
+INFORME DE TRABAJO - PLATAFORMA DE INGRESO CMN (v3)
+ESPECIALIDAD: SISTEMA DE COMPUTACIÓN DE DATOS (ANALISTA DE SISTEMAS)
+COLEGIO MILITAR DE LA NACIÓN - OFICIAL DEL CUERPO PROFESIONAL
 ================================================================================
-FECHA DE CONSOLIDACIÓN: 03 de Octubre de 2026 (revisión mayor v2.0)
-ESTADO DE PLATAFORMA: Operativa, verificada en navegador y con persistencia local
-DIRECTORIO DE TRABAJO: C:\Users\Aco\.gemini\antigravity\scratch\cmn_plataforma_ingreso
-================================================================================
+Fecha de consolidación: 09 de octubre de 2026 (revisión mayor v3.0)
+Producción: https://colegiomilitar-1convers-projects.vercel.app (deploy automático
+desde la rama master de github.com/1conver/cmn_plataforma_ingreso)
 
-1. ANTECEDENTES Y REQUERIMIENTOS DEL POSTULANTE
+1. FUENTES OFICIALES Y DATOS VERIFICADOS (09-OCT-2026)
 --------------------------------------------------------------------------------
-1.1. Perfil del Postulante:
-- Nombre: Franco.
-- Título de base: Técnico Universitario en Seguridad Informática.
-- Concurso: Ingreso al Cuerpo Profesional del Ejército Argentino como Oficial
-  (Subteniente en Comisión), Escalafón Sistema Computación de Datos.
-- Fortalezas consolidadas: ciberseguridad operativa, Cloud (Azure, GCP), redes
-  modernas y VPN (Wireguard), segmentación, iptables/pfSense.
-- Brechas críticas a nivelar (exigidas por el CMN):
-  * Prioridad 1: Normalización avanzada (4FN por MVD, 5FN/PJNF por Teorema de Fagin).
-  * Prioridad 1: Windows Server on-premise (AD, bosque/árbol, FSMO, replicación,
-    AGDLP, NTFS vs Share).
-  * Prioridad 2: Stack web clásico (ASP/VBScript con Application/Session, PHP
-    procedural mysql_connect vs mysql_pconnect), historia de lenguajes y
-    programación estructurada.
+- Programa_Oficial_CMN.pdf y Modelo_Examen_Oficial_CMN.pdf: idénticos byte a byte
+  (MD5) a los que publica hoy colegiomilitar.mil.ar. Siguen vigentes.
+- Página oficial del Cuerpo Profesional (ingreso 2027):
+  * Inscripción: 13-abr-2026 al 02-nov-2026. Exámenes: 16 al 20-nov-2026, presencial.
+  * Arancel administrativo: $ 38.000. Analistas: hasta 27 años, título habilitante
+    (terciario o superior). Egreso: Subteniente SCD (Oficial Informático) EC.
+  * Curso de 4 meses en internado (febrero a junio de 2027).
+- Guía de Ingreso Profesionales: exámenes intelectuales de Analistas =
+  Escrito de Redes (90'), Escrito de Programación (90') y Práctico de redes y
+  programación (90'). El Programa (2015) y el Modelo hablan de escrito/oral/práctico
+  y de un escrito de 120'. La plataforma prepara ambos formatos.
+- Además: aptitud física (2000 m, flexo-extensión de brazos y flexión de tronco
+  en 1'30"; nota = promedio de las 3 según la tabla oficial), circuito médico
+  (IMC 18-30, agudeza visual >= 7/10, etc.), psicotécnico y entrevista personal.
+  Ingreso por orden de mérito.
+- Foros: los hilos de Zona Militar sobre SCD son de 2007-2012 y no aportan
+  contenido del examen; no se usaron como fuente.
 
-1.2. Evolución de la plataforma:
-- v1: plataforma de 5 módulos; luego 7; luego rediseño sobrio Grafito/Carbono
-  (#0d0e11 / #14161a / #1a1c22), sin emojis, síntesis extrema de textos.
-- v2 (esta revisión, 03-OCT-2026): reconstrucción integral verificada en
-  navegador. Detalle completo en la sección 5.
-
-================================================================================
-2. PARÁMETROS DEL EXAMEN OFICIAL DEL CMN
+2. HALLAZGO CLAVE: EL MODELO DE EXAMEN AGREGA TEMAS
 --------------------------------------------------------------------------------
-Fuente: "Programa Intelectual de Ingreso" (El Palomar, noviembre 2015) y
-"Modelo de Examen Escrito Oficial" (ambos PDF reales en esta carpeta).
+El Modelo exige temas que el Programa no menciona y que la v2 no cubría:
+diagramas de flujo, pseudocódigo, resolución de problemas graficada, programación
+orientada a objetos, ejemplos de lenguajes y nuevas tendencias web. Se incorporaron
+como puntos C11 a C16 (el temario pasa de 56 a 62 puntos) y tienen teoría,
+podcast, laboratorio, preguntas, fichas y compendio propio (E).
+También se corrigió que la v2 presentaba una ponderación del escrito (4+3+3) como
+"oficial": el Modelo solo indica los tipos de pregunta y 10 puntos; ahora se
+aclara que es una distribución estimada.
 
-- Modalidad: 3 momentos secuenciales: escrito (eliminatorio), oral ante mesa
-  examinadora y evaluación práctica.
-- Examen escrito: 120 minutos continuos; escala 0.00 a 10.00; aprueba con 6.00.
-  * Parte I: 10 preguntas de selección múltiple (0.40 c/u = 4.00 pts).
-  * Parte II: 3 preguntas de completamiento directo (1.00 c/u = 3.00 pts).
-  * Parte III: 1 caso práctico de desarrollo operacional (3.00 pts).
-
-================================================================================
-3. TEMARIO OFICIAL (56 PUNTOS, REFLEJADOS 1 A 1 EN LA PESTAÑA "PROGRAMA")
+3. QUÉ HAY EN LA v3
 --------------------------------------------------------------------------------
-A. REDES (17 puntos): OSI y TCP/IP; Repeaters, Hub, Switch, Bridge, Router;
-   UTP, Coaxil, Fibra óptica, Inalámbricas; LAN características/tipos,
-   direccionamiento IP, subneteo, enrutamiento; WAN y Frame Relay, PPP, HDLC.
-B. WINDOWS (17 puntos): instalación; DC, árbol y bosque; sitios y replicación;
-   cuentas; grupos locales y globales; CONFIGURACIÓN DE IMPRESORAS; permisos
-   (compartidos, NTFS, impresoras); servicios DNS, WINS, DHCP, RRAS, VPN
-   (PPTP/L2TP, IPSec, RADIUS) y DFS.
-C. DESARROLLO (10 puntos): UML; compaginadores/traductores/compiladores/
-   intérpretes; HISTORIA DE LOS LENGUAJES; PROGRAMACIÓN ESTRUCTURADA; los 6
-   paradigmas; nacimiento de la web, HTML, JS y DHTML, PHP+MySQL, ASP/VBScript.
-D. BASES DE DATOS (12 puntos): etapas de diseño; E-R (representación, GRADO,
-   CARDINALIDAD, reducción); modelo relacional (tablas, dominios, claves,
-   vistas); normalización en 5 formas normales; T-SQL (selección, manipulación,
-   tablas, vistas, índices).
-NOTA v2: los temas en MAYÚSCULAS estaban ausentes o incompletos en la v1 y
-fueron incorporados a teoría, bancos de preguntas y compendios.
+Arquitectura: index.html + assets/css/app.css + assets/js (núcleo, datos, vistas)
++ podcast/*.mp3. Funciona como PWA instalable (manifest + service worker) y
+conserva el progreso de la v2 (mismas claves de almacenamiento, con migración).
 
-================================================================================
-4. INVESTIGACIÓN DE BIBLIOGRAFÍA: VEREDICTO VERIFICADO (03-OCT-2026)
+Secciones:
+- Inicio: cuenta regresiva al examen, rango y XP, racha, misiones del día,
+  avance por pilar, plan semanal hasta el 16-nov, temas débiles y medallas.
+- Estudiar: Programa (62 puntos enlazados a episodio, videos y teoría), Teoría
+  por pilar, Podcasts, Videoteca (75 videos) y Biblioteca.
+- Practicar: Simulacros (Programación 90', Redes 90', Integral 120', Práctico 90',
+  Repetir falladas), Arcade (6 juegos), Laboratorio de algoritmos, Subneteo
+  (clásico + VLSM), Laboratorio SQL y Normalización.
+- Repasar: Fichas (78), Memoria rápida (repetición espaciada) y Mesa oral (22
+  preguntas, con temporizador y reconocimiento de voz opcional).
+- Ingreso: fechas, estructura de exámenes, calculadora de aptitud física con la
+  tabla oficial (masculino/femenino) y checklists de inscripción, estudios
+  médicos y documentación.
+
+Podcast "Frecuencia CMN": 24 episodios (2 h 11 min, 45 MB) conducidos por Lu y
+Tomi, uno por tema del Programa y del Modelo + un brief de misión. Guiones propios
+en tools/podcast_src/, audio sintetizado con voces neuronales es-AR (edge-tts),
+transcripción sincronizada, 3 preguntas por episodio, reproductor persistente con
+velocidad, controles en pantalla de bloqueo y lectura alternativa con la voz del
+navegador.
+
+Gamificación: 12 rangos (Postulante a Teniente General; "Subteniente" a los 600
+XP, igual que el grado de egreso), racha diaria, 3 misiones por día, 18 medallas.
+
+Laboratorio de algoritmos: intérprete propio de pseudocódigo estilo PSeInt
+(Si, Segun, Mientras, Repetir, Para, MOD, funciones) que genera el diagrama de
+flujo SVG a partir del código y la prueba de escritorio paso a paso, con 16
+ejercicios clásicos y desafíos de "¿qué muestra?".
+
+Laboratorio SQL: SQLite en el navegador (sql.js desde cdnjs) sobre una base
+militar de ejemplo; 18 ejercicios (SELECT, JOIN, GROUP BY/HAVING, subconsultas,
+INSERT, UPDATE, DELETE, CREATE TABLE/VIEW/INDEX) con verificación automática;
+traduce TOP, CLUSTERED/NONCLUSTERED, IDENTITY y GETDATE() de T-SQL.
+
+Bancos: 130 opción múltiple, 32 completamiento, 10 casos de desarrollo con
+rúbrica de autoevaluación, 22 de mesa oral, 78 fichas, 28 mnemotecnias,
+80 afirmaciones V/F, 25 adivinanzas, 16 secuencias y 12 mazos de pares.
+
+4. CORRECCIONES DE CONTENIDO RESPECTO DE LA v2
 --------------------------------------------------------------------------------
-El postulante sospechó correctamente: de los 6 PDFs, solo el Programa Oficial y
-el Modelo de Examen son documentos reales del CMN. Los 4 "Bibliografia_PilarX"
-eran compendios generados (no los libros originales).
+- Videoteca: varios "cursos magistrales de 1 h 30" eran shorts de 59 s y dos
+  canales estaban mal atribuidos. Se rearmó con 75 videos verificados (existencia,
+  reproducción embebida, idioma y duración real).
+- Replicación intrasitio: ~15 s desde Windows Server 2003 (5 min era Windows 2000).
+- SMTP intersitio: replica esquema, configuración y catálogo global, nunca dominio.
+- PHP: se aclara que mysql_* se eliminó en PHP 7 (hoy mysqli/PDO).
+- Distribución del escrito: marcada como estimada (ver punto 2).
 
-Investigación individual de los 14 títulos citados por el programa oficial
-(motores de búsqueda + catálogos): TODOS existen como obras comerciales reales,
-pero NINGUNO tiene PDF original legal y gratuito en la web. Son obras protegidas
-de Ra-Ma, New Riders, Reverté, Bubok, Visión Libros, IC Editorial y Babelcube.
-Hallazgos de acceso legítimo (cargados en la pestaña Bibliografía):
-- Uyless Black: el original en inglés "Computer Networks: Protocols, Standards
-  and Interfaces" (1987) está en Internet Archive con préstamo digital gratuito
-  (archive.org/details/computernetworks0000blac_c2d7).
-- CCNA 1er y 2do año: "CCNA 1 and 2 Companion Guide" (2003 y 2005) en Internet
-  Archive con préstamo gratuito; currícula actual en netacad.com (cuenta gratis).
-- Teleinformática Vol. 2 (Castro Lechtaler/Fusario): vista previa en Google
-  Books (books.google.com/books?id=W5qfR_axiGsC); venta en Reverté.
-- Curricula Microsoft y TechNet: sucesor oficial gratuito en Microsoft Learn
-  (learn.microsoft.com) — el MOC 2008 fue retirado (~2019).
-- Resto (Carballar, Rozell, Adamson, Eslava Muñoz x2, Nevado Cabello, Jiménez
-  Capel, Prescott): solo compra (editorial/tienda) o biblioteca (WorldCat);
-  la edición de Nevado Cabello se vende como PDF de pago en Casa del Libro.
-No se enlazan sitios con copias piratas (Z-Library, Scribd con uploads de
-terceros, etc.): la plataforma enlaza únicamente acceso verificado legítimo.
-
-================================================================================
-5. PLATAFORMA v2 - QUÉ CAMBIÓ (index.html reconstruido y verificado)
+5. HERRAMIENTAS (carpeta tools/)
 --------------------------------------------------------------------------------
-5.1. Estructura (10 pestañas):
-  Resumen | Programa | Bibliografía & PDFs | Teoría | Simulacro | Normalización
-  BD | Subneteo IPv4 | SQL / T-SQL | Flashcards | Mesa Oral.
+- build_podcasts.py      Genera audio y datos del podcast desde podcast_src/*.txt
+                         (requiere: pip install edge-tts). Cachea los segmentos.
+- generate_compendios.py Regenera los 5 compendios PDF (requiere reportlab).
+- verify_videos.py       Verifica los 75 videos de la videoteca contra YouTube.
+- make_icons.py          Íconos de la PWA (requiere Pillow).
 
-5.2. Nuevas funcionalidades:
-- Pestaña "Programa": checklist interactivo con los 56 puntos exactos del
-  programa oficial, fuente bibliográfica por punto, progreso por pilar y
-  persistencia automática (localStorage).
-- Persistencia total: simulacros rendidos, mejor nota, historial de los últimos
-  8 intentos con fecha, temario marcado y fichas dominadas sobreviven el cierre.
-- Subneteo DINÁMICO: antes eran 6 casos fijos; ahora cada ejercicio se genera al
-  azar (3 dificultades) y la solución se calcula programáticamente (máscara,
-  red, broadcast, primer/último host, hosts útiles), con "desarrollo" del método
-  del octeto crítico y racha de aciertos persistente.
-- Bancos ampliados y corregidos: 52 MCQ (antes 16; además ahora se MEZCLAN LAS
-  OPCIONES en cada intento, eliminando el patrón adivinable de la v1), 12 de
-  completamiento (antes 3), 12 casos orales (antes 4), 44 flashcards (antes 12)
-  y 6 preguntas rápidas SQL.
-- Modo "Repetir falladas": reconstruye un simulacro con los ítems fallados del
-  último intento.
-- Visor de PDF integrado (modal con iframe + fallback "abrir en pestaña").
-- Atajos de teclado: flechas navegar fichas, Espacio girar, S marcar OK,
-  R repasar, 1-4 responder la primera MCQ sin responder, Esc cierra el visor.
-- Flashcards con marcado "La sé / Repasar" persistente y filtro por estado.
-- Restauración de la última pestaña visitada; cronómetro rojo bajo 10 min.
-
-5.3. Sección Bibliografía reconstruida (honestidad documental):
-- Aclaración destacada: qué PDFs son oficiales (2) y qué compendios son
-  síntesis propia (4), con fecha de verificación.
-- Tabla de los 14 títulos con editor/año/ISBN verificados, estado
-  (GRATUITO OFICIAL / PRÉSTAMO DIGITAL / SIN PDF LEGAL) y enlaces legítimos.
-- Nueva sección de fuentes oficiales gratuitas (Microsoft Learn, NetAcad,
-  RFC 1918/1661, IEEE 802.11).
-
-5.4. Contenido teórico: cubre ahora el 100% del programa oficial, incluyendo
-  los temas faltantes en v1: instalación de AD, protocolos de replicación de
-  sitios, configuración de impresoras (compartir, drivers, permisos de
-  impresión, pool, prioridades), nodos NetBIOS de WINS, historia de los
-  lenguajes (FORTRAN 1957 a C# 2000), programación estructurada
-  (Böhm-Jacopini, Dijkstra), nacimiento de la web (CERN, Mosaic), grado y
-  cardinalidad E-R, atributos derivados, vistas, integridades y ACID.
-
-5.5. Diseño: paleta Grafito/Carbono mantenida y refinada (tipografía 13.5px,
-  animación sutil de cambio de vista, :focus-visible para teclado, hover en
-  tablas, chips de estado, kbd para atajos, responsive a 390px verificado,
-  hoja de estilos de impresión para estudiar en papel).
-
-5.6. Compendios PDF regenerados (tools/generate_compendios.py, Python +
-  reportlab): de 1 página a 3-4 páginas cada uno, con encabezado institucional,
-  DESCARGO explícito de que son síntesis propia (no los libros originales),
-  tablas comparativas y casos; regenerables con un comando. Bibliografía
-  real citada al pie de cada compendio.
-
-5.7. Verificación realizada en navegador (HTTP local):
-- Carga sin errores; 10 pestañas; simulacro completo rendido y calificado
-  (nota, desglose, rúbrica, historial y "Repetir falladas" correctos).
-- Subneteo resuelto y validado 6/6 con desarrollo mostrado.
-- Checklist del temario persiste tras recargar la página.
-- Visor PDF muestra el Programa Oficial (4 páginas) correctamente.
-- Vista móvil (390px) y laboratorio de normalización (4 pasos) verificados.
-
-================================================================================
-6. INVENTARIO DE ARCHIVOS
+6. CÓMO USARLA
 --------------------------------------------------------------------------------
-1) index.html                - Plataforma v2 (SPA autónoma, 10 módulos).
-2) Programa_Oficial_CMN.pdf  - PDF OFICIAL (4 págs., El Palomar, nov. 2015).
-3) Modelo_Examen_Oficial_CMN.pdf - PDF OFICIAL del formato de examen escrito.
-4) Bibliografia_PilarA_Redes_CCNA.pdf   - Compendio A (síntesis propia, 4 págs.).
-5) Bibliografia_PilarB_WindowsServer_AD.pdf - Compendio B (síntesis propia).
-6) Bibliografia_PilarC_Software_PHP_ASP.pdf - Compendio C (síntesis propia).
-7) Bibliografia_PilarD_BasesDeDatos_SQL.pdf - Compendio D (síntesis propia).
-8) tools/generate_compendios.py - Generador reproducible de los compendios.
-9) REPORTE_COMPLETO_CMN.txt  - Este informe (v2).
-
-PARA ABRIR: doble clic en index.html (funciona offline desde file://; los PDFs
-se abren en el visor integrado o en pestaña). Para probar con servidor local:
-python -m http.server 8973 en la carpeta y abrir http://127.0.0.1:8973.
+- Online: la URL de producción. En el celular: menú del navegador → "Instalar app"
+  o "Agregar a la pantalla de inicio".
+- Local: python -m http.server 8973 en esta carpeta y abrir http://127.0.0.1:8973
+  (el servidor de Python no permite adelantar el audio; en producción sí).
+- El progreso queda en el navegador; para pasarlo a otro dispositivo usar
+  Ajustes → Exportar / Importar progreso.
 
 ================================================================================
-7. TRAZABILIDAD BIBLIOGRÁFICA EN LAS PRÁCTICAS
---------------------------------------------------------------------------------
-- Simulacro: cada ítem cita su fuente ([Uyless Black · Cap. 2], [Microsoft
-  TechNet · FSMO], [Nevado Cabello · Cap. 4], etc.) y la explicación.
-- Flashcards: autor/manual en cada ficha.
-- Subneteo: referencia al método del octeto crítico (CCNA) y desarrollo paso a paso.
-- Mesa Oral: respuestas en lenguaje institucional con RFC, teoremas (Fagin) y
-  especificaciones de Microsoft.
-- Programa: fuente bibliográfica declarada por cada uno de los 56 puntos.
-
-================================================================================
-FIN DEL INFORME TÉCNICO CONSOLIDADO v2
+FIN DEL INFORME v3
 ================================================================================

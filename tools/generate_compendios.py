@@ -5,6 +5,7 @@ Los 4 PDFs son SINTESIS PROPIAS de estudio (no reproduccion de los libros origin
 alineadas al Programa Intelectual de Ingreso del CMN (El Palomar, nov. 2015).
 """
 import os
+import re
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import mm
 from reportlab.lib import colors
@@ -15,13 +16,13 @@ from reportlab.platypus import (BaseDocTemplate, PageTemplate, Frame, Paragraph,
 
 OUT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Paleta sobria coherente con la plataforma (grafito / carbono)
+# Paleta coherente con la plataforma v3 (oliva tactico)
 INK      = colors.HexColor('#1a1c22')
-GRAPHITE = colors.HexColor('#14161a')
+GRAPHITE = colors.HexColor('#16201a')
 MUTED    = colors.HexColor('#5a6070')
 LINE     = colors.HexColor('#c9ccd4')
-SOFT     = colors.HexColor('#eef0f4')
-ACCENT   = colors.HexColor('#39415a')
+SOFT     = colors.HexColor('#f1efe6')
+ACCENT   = colors.HexColor('#4f6d1d')
 WARNBG   = colors.HexColor('#f4efe3')
 WARNLN   = colors.HexColor('#b7a15c')
 
@@ -50,9 +51,9 @@ def headfoot(canvas, doc):
     canvas.setFont('Helvetica-Bold', 8)
     canvas.drawString(18*mm, h - 7.5*mm, 'COLEGIO MILITAR DE LA NACION  ·  ESCALAFON SISTEMA COMPUTACION DE DATOS')
     canvas.setFont('Helvetica', 7.5)
-    canvas.setFillColor(colors.HexColor('#9aa2b5'))
+    canvas.setFillColor(colors.HexColor('#b9c99a'))
     canvas.drawString(18*mm, h - 12*mm, 'Sintesis de estudio para el Programa Intelectual de Ingreso')
-    canvas.setFillColor(colors.HexColor('#9aa2b5'))
+    canvas.setFillColor(colors.HexColor('#b9c99a'))
     canvas.drawRightString(w - 18*mm, h - 7.5*mm, 'USO INTERNO DE ESTUDIO')
     # pie
     canvas.setStrokeColor(LINE)
@@ -91,7 +92,11 @@ def H3(t): return Paragraph(t, S['h3'])
 def P(t):  return Paragraph(t, S['body'])
 def B(t):  return Paragraph(t, S['bullet'], bulletText='•')
 def NOTE(t): return Paragraph(t, S['note'])
-def CODE(t): return Paragraph(t.replace('\n', '<br/>'), S['code'])
+def CODE(t):
+    # Paragraph colapsa los espacios: se preservan la sangria y los espacios multiples
+    t = re.sub(r'(^|\n)( +)', lambda m: m.group(1) + '&nbsp;' * len(m.group(2)), t)
+    t = re.sub(r' {2,}', lambda m: '&nbsp;' * len(m.group()), t)
+    return Paragraph(t.replace('\n', '<br/>'), S['code'])
 
 def TBL(headers, rows, widths=None):
     data = [[Paragraph(h, S['th']) for h in headers]]
@@ -256,10 +261,11 @@ def compendio_b():
                'Comparte un unico <b>Esquema</b>, un <b>Catalogo Global</b> y la particion de Configuracion.'))
     f.append(H3('Estructura fisica'))
     f.append(B('<b>Sitios (Sites):</b> grupos de subredes IP de alta velocidad. Definen la <b>replicacion</b>: '
-               'intra-sitio (RPC notificado, sin comprimir, ~5 min) frente a inter-sitio (programada y comprimida, '
-               'ahora de ancho de banda; puede usar SMTP). Cada sitio debe tener al menos un <b>bridgehead</b>.'))
+               'intra-sitio (notificacion de cambios, ~15 s desde Windows Server 2003; 5 min en Windows 2000; sin '
+               'comprimir) frente a inter-sitio (programada, 180 min por defecto, y comprimida para ahorrar ancho de '
+               'banda). Cada sitio replica hacia afuera a traves de un <b>bridgehead</b>; el KCC arma la topologia.'))
     f.append(P('<b>Protocolos de replicacion:</b> RPC sobre IP (predeterminado, autenticado y cifrado) y SMTP '
-               '(solo para particiones de Configuracion y Esquema entre sitios; no replica el dominio).'))
+               '(solo particiones de Esquema, Configuracion y Catalogo Global entre sitios; nunca la de dominio).'))
 
     f.append(H2('2. Roles FSMO (Flexible Single Master Operations)'))
     f.append(TBL(['Rol', 'Alcance', 'Funcion', 'Impacto si falla'], [
@@ -423,6 +429,8 @@ def compendio_c():
     f.append(B('<b>Diferencia critica:</b> mysql_connect() cierra la conexion al finalizar el script; '
                'mysql_pconnect() la mantiene en el pool del servidor web para reutilizarla en peticiones '
                'posteriores (menor overhead, riesgo de saturar max_connections si se abusa).'))
+    f.append(B('<b>Vigencia:</b> las funciones mysql_* quedaron obsoletas en PHP 5.5 y se <b>eliminaron en PHP 7</b>; '
+               'hoy se usan <b>mysqli</b> o <b>PDO</b> con consultas preparadas (defensa contra inyeccion SQL).'))
     f.append(H3('ASP clasico con VBScript'))
     f.append(TBL(['Objeto intrinseco', 'Funcion'], [
         ['Request', 'Lee entrada del cliente: formularios, querystring, cookies'],
@@ -555,9 +563,88 @@ def compendio_d():
           'Diseno E-R, modelo relacional, normalizacion 1FN-5FN y T-SQL completo',
           DISCLAIMER, f)
 
+# ============================================================ COMPENDIO E
+def compendio_e():
+    f = []
+    f.append(H2('1. Algoritmos y resolucion de problemas'))
+    f.append(P('Un <b>algoritmo</b> es una secuencia finita y ordenada de pasos, sin ambiguedad, que resuelve un '
+               'problema. Caracteristicas: <b>preciso</b> (orden claro), <b>definido</b> (mismas entradas, mismo '
+               'resultado) y <b>finito</b> (termina). Toda solucion tiene <b>entrada, proceso y salida</b>.'))
+    f.append(B('<b>Etapas:</b> analisis (entradas y salidas) &rarr; diseno (diagrama de flujo o pseudocodigo) &rarr; '
+               'codificacion &rarr; prueba y depuracion &rarr; documentacion y mantenimiento.'))
+    f.append(H2('2. Diagramas de flujo (ANSI / ISO 5807)'))
+    f.append(TBL(['Simbolo', 'Forma', 'Uso'], [
+        ['Terminal', 'Ovalo o rectangulo redondeado', 'Inicio y Fin'],
+        ['Proceso', 'Rectangulo', 'Calculo o asignacion'],
+        ['Entrada / Salida', 'Paralelogramo', 'Leer o mostrar datos'],
+        ['Decision', 'Rombo', 'Condicion con exactamente dos salidas (V/F)'],
+        ['Conector', 'Circulo', 'Une partes en la misma pagina'],
+        ['Conector de pagina', 'Pentagono', 'Continua en otra hoja'],
+        ['Subproceso', 'Rectangulo con barras laterales', 'Modulo definido aparte'],
+        ['Documento / Pantalla', 'Hoja ondulada / monitor', 'Salida impresa / por pantalla'],
+    ], [34*mm, 52*mm, None]))
+    f.append(B('<b>Reglas:</b> un unico inicio y un unico fin; flujo de arriba hacia abajo y de izquierda a derecha; '
+               'las lineas no se cruzan (se usan conectores); todo simbolo salvo el fin tiene salida.'))
+    f.append(H2('3. Pseudocodigo (estilo PSeInt) y prueba de escritorio'))
+    f.append(TBL(['Sintaxis', 'Significado'], [
+        ['Algoritmo nombre ... FinAlgoritmo', 'Inicio y fin del programa'],
+        ['Definir x Como Entero / Real / Caracter / Logico', 'Declaracion de variables'],
+        ['x &lt;- expresion', 'Asignacion'],
+        ['Leer a  /  Escribir "texto", x', 'Entrada y salida'],
+        ['+ - * / ^ MOD   = &lt;&gt; &lt; &gt; &lt;= &gt;=   Y O NO', 'Operadores (MOD = resto)'],
+        ['Si c Entonces ... SiNo ... FinSi', 'Seleccion simple y doble'],
+        ['Segun x Hacer  1: ...  De Otro Modo: ...  FinSegun', 'Seleccion multiple'],
+        ['Mientras c Hacer ... FinMientras', 'Repeticion: pregunta antes (0 o mas vueltas)'],
+        ['Repetir ... Hasta Que c', 'Repeticion: pregunta despues (1 o mas vueltas)'],
+        ['Para i &lt;- 1 Hasta n Con Paso 1 Hacer ... FinPara', 'Repeticion con contador'],
+    ], [80*mm, None]))
+    f.append(B('<b>Patrones:</b> contador (c &lt;- c + 1), acumulador (s &lt;- s + x; el de producto arranca en 1) '
+               'y bandera (variable logica). Se inicializan antes del bucle.'))
+    f.append(CODE('Algoritmo Factorial\n'
+                  '    Leer n\n'
+                  '    f &lt;- 1\n'
+                  '    Para i &lt;- 1 Hasta n Hacer\n'
+                  '        f &lt;- f * i\n'
+                  '    FinPara\n'
+                  '    Escribir f\n'
+                  'FinAlgoritmo'))
+    f.append(TBL(['Prueba de escritorio (n = 4)', 'i', 'f', 'Detalle'], [
+        ['Inicio', '-', '1', 'Acumulador de producto inicializado en 1'], ['Vuelta 1', '1', '1', '1 x 1'],
+        ['Vuelta 2', '2', '2', '1 x 2'], ['Vuelta 3', '3', '6', '2 x 3'],
+        ['Vuelta 4', '4', '24', '6 x 4 &rarr; Escribir muestra 24'],
+    ], [44*mm, 12*mm, 14*mm, None]))
+    f.append(H2('4. Programacion estructurada y orientada a objetos'))
+    f.append(B('<b>Bohm-Jacopini (1966):</b> todo algoritmo se expresa con secuencia, seleccion e iteracion. '
+               '<b>Dijkstra (1968):</b> abandonar el GOTO. Diseno descendente, alta cohesion y bajo acoplamiento.'))
+    f.append(B('<b>POO:</b> clase (molde) y objeto (instancia) con atributos y metodos. Pilares: <b>abstraccion</b>, '
+               '<b>encapsulamiento</b>, <b>herencia</b> y <b>polimorfismo</b>. Pioneros: Simula 67 y Smalltalk.'))
+    f.append(B('<b>UML (clases):</b> visibilidad + publico, - privado, # protegido; agregacion (rombo vacio), '
+               'composicion (rombo lleno), herencia (triangulo vacio), dependencia (flecha punteada).'))
+    f.append(H2('5. Ejemplos de lenguajes y nuevas tendencias web'))
+    f.append(TBL(['Lenguaje', 'Ano', 'Paradigma / uso'], [
+        ['FORTRAN', '1957', 'Imperativo · calculo cientifico'], ['LISP', '1958', 'Funcional · IA'],
+        ['COBOL', '1959', 'Imperativo · gestion comercial'], ['Pascal', '1970', 'Estructurado · ensenanza'],
+        ['C', '1972', 'Imperativo · sistemas (UNIX)'], ['Prolog', '1972', 'Logico'],
+        ['C++', '1983', 'Multiparadigma / OO'], ['Python', '1991', 'Multiparadigma · datos y automatizacion'],
+        ['Java', '1995', 'OO · bytecode y JVM'], ['JavaScript', '1995', 'Multiparadigma · web en el cliente'],
+        ['PHP', '1995', 'Web del lado del servidor'], ['C#', '2000', 'OO · plataforma .NET'],
+    ], [30*mm, 16*mm, None]))
+    f.append(B('<b>Tendencias:</b> SPA (React, Angular, Vue), PWA (service worker, instalable, offline), renderizado '
+               'en servidor / generacion estatica, APIs REST y GraphQL con JSON, microservicios y serverless, '
+               'WebAssembly, TypeScript, diseno responsive y seguridad por defecto (HTTPS).'))
+    f.append(NOTE('Fuente: Modelo de Examen Escrito - Analista de Sistemas (CMN), puntos a) y b), que agregan '
+                  'estos temas a los del Programa Intelectual de Ingreso.'))
+    build('Bibliografia_PilarE_Algoritmia_POO.pdf',
+          'Compendio E de estudio - Algoritmia, pseudocodigo y POO (Modelo de Examen)',
+          'COMPENDIO E · ALGORITMIA, PSEUDOCODIGO Y POO',
+          'Diagramas de flujo, pseudocodigo, prueba de escritorio, programacion OO, lenguajes y tendencias web',
+          DISCLAIMER, f)
+
+
 if __name__ == '__main__':
     compendio_a()
     compendio_b()
     compendio_c()
     compendio_d()
-    print('OK - 4 compendios generados en', OUT_DIR)
+    compendio_e()
+    print('OK - 5 compendios generados en', OUT_DIR)
